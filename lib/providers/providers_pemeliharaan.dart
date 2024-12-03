@@ -25,10 +25,11 @@ class ProviderPemeliharaan extends ChangeNotifier {
   final ServicesPegawai _servicesPegawai = ServicesPegawai();
 
   List<Pemeliharaan>? _pemeliharaan;
+  List<Pemeliharaan>? _filterPemeliharaan;
   bool _isLoading = false;
   String? _errorMessage;
 
-  List<Pemeliharaan>? get pemeliharaan => _pemeliharaan;
+  List<Pemeliharaan>? get pemeliharaan => _filterPemeliharaan ?? _pemeliharaan;
   String? get errorMessage => _errorMessage;
   bool get isLoading => _isLoading;
 
@@ -102,5 +103,27 @@ class ProviderPemeliharaan extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void applyFilter(String query) {
+    if (query.isEmpty) {
+      _filterPemeliharaan = _pemeliharaan;
+    } else {
+      _filterPemeliharaan = _pemeliharaan!.where((pemeliharaan) {
+        return pemeliharaan.pegawai.nama
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+               pemeliharaan.barang.nama
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+               pemeliharaan.pemeliharaan.kondisi
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+               pemeliharaan.pemeliharaan.status
+                .toLowerCase()
+                .contains(query.toLowerCase());
+      }).toList();
+    }
+    notifyListeners();
   }
 }

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:pusdatin_end/models/dataset/dataset_peminjamanDetail.dart';
 
 class ServicesPeminjaman {
-  final String baseUrl = 'http://localhost:8000/api/peminjaman/detail';
+  final String baseUrl = 'http://10.0.2.2:8000/api/peminjaman/detail';
 
   // Fungsi untuk mengambil data peminjaman dari API
   Future<List<DatasetPeminjamandetail>> fetchPeminjamanDetail() async {
@@ -25,7 +25,7 @@ class ServicesPeminjaman {
         throw Exception('Gagal memuat data: ${response.statusCode}');
       }
     } catch (error) {
-      throw Exception('Terjadi kesalahan saat mengambil data: $error');
+      throw Exception('Tidak ada internet');
     }
   }
 }

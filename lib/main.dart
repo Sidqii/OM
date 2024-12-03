@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/pages/page_login.dart';
-import 'package:pusdatin_end/providers/providers_filter.dart';
 import 'package:pusdatin_end/providers/providers_login.dart';
 import 'package:pusdatin_end/providers/providers_pegawai.dart';
 import 'package:pusdatin_end/providers/providers_dataBarang.dart';
@@ -17,7 +16,6 @@ void main() {
         ChangeNotifierProvider(create: (context) => ProviderPegawai()),
         ChangeNotifierProvider(create: (context) => ProviderPemeliharaan()),
         ChangeNotifierProvider(create: (context) => ProvidersPeminjaman()),
-        ChangeNotifierProvider(create: (context) => ProvidersFilter()),
         // -> Provider lain.
       ],
       child: MyApp(),

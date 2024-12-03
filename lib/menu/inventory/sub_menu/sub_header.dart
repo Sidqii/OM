@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pusdatin_end/providers/providers_filter.dart';
+import 'package:pusdatin_end/providers/providers_dataBarang.dart';
+import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
+import 'package:pusdatin_end/providers/providers_peminjaman.dart';
 
 class MenuHeader extends StatefulWidget {
   final VoidCallback onEditData;
@@ -23,11 +25,10 @@ class _MenuHeaderState extends State<MenuHeader> {
   @override
   void initState() {
     super.initState();
-
     widget.tabController.addListener(() {
-      context
-          .read<ProvidersFilter>()
-          .setActiveTabIndex(widget.tabController.index);
+      final activeTabIndex = widget.tabController.index;
+      print('Tab aktif diubah ke: $activeTabIndex');
+      // Tidak perlu tambahan logika disini karena filter akan dilakukan langsung saat mengetik
     });
   }
 
@@ -93,11 +94,23 @@ class _MenuHeaderState extends State<MenuHeader> {
                     const SizedBox(width: 16.0),
                   ],
                   Expanded(
-                    child: Consumer<ProvidersFilter>(
-                      builder: (context, ProvidersFilter, child) {
+                    child: Consumer2<ProviderDatabarang, ProviderPemeliharaan>(
+                      builder: (context, dataBarangProvider, pemeliharaanProvider, child) {
                         return TextField(
-                          onChanged: (value) {
-                            ProvidersFilter.updateSearchQuery(value);
+                          onChanged: (query) {
+                            final activeTabIndex = widget.tabController.index;
+
+                            // Penerapan filter berdasarkan tab yang aktif
+                            if (activeTabIndex == 0) {
+                              // Tab Data Barang
+                              dataBarangProvider.applyFilter(query);
+                            } else if (activeTabIndex == 1) {
+                              // Tab Pemeliharaan
+                              pemeliharaanProvider.applyFilter(query);
+                            } else if (activeTabIndex == 2) {
+                              // Tab Peminjaman
+                              context.read<ProvidersPeminjaman>().applyFilter(query);
+                            }
                           },
                           decoration: InputDecoration(
                             hintText: 'Cari',

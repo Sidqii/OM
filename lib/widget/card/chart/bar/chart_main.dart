@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
 import 'chart_drpdwn.dart' as custom;
-import 'chart_invent.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pusdatin_end/providers/providers_dataBarang.dart';
+import 'package:pusdatin_end/widget/card/chart/bar/chart_invent.dart';
 
 class ChartBar extends StatefulWidget {
   @override
@@ -8,14 +10,19 @@ class ChartBar extends StatefulWidget {
 }
 
 class _ChartBarState extends State<ChartBar> {
-  String selectedCategory = 'Kondisi';
+  String selectedCategory = 'Status';
 
-  void _onCategoryChanged(String? newCategory) async {
-    await Future.delayed(const Duration(
-      milliseconds: 50
-    ));
+  @override
+  void initState() {
+    super.initState();
+    print('Memanggil fetchDataBarang');
+    Provider.of<ProviderDatabarang>(context, listen: false).fetchDataBarang();
+  }
+
+  void _onCategoryChanged(String newCategory) async {
+    await Future.delayed(const Duration(milliseconds: 50));
     setState(() {
-      selectedCategory = newCategory ?? 'Kondisi';
+      selectedCategory = newCategory;
       print('Selected Category changed to: $selectedCategory');
     });
   }
@@ -23,6 +30,13 @@ class _ChartBarState extends State<ChartBar> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final provider = Provider.of<ProviderDatabarang>(context);
+
+    if (provider.isLoading) {
+      print('Data dalam proses fetch');
+    } else {
+      print('Data barang di ChartBar: ${provider.dataBarang}');
+    }
 
     return Container(
       width: double.infinity,
@@ -46,7 +60,6 @@ class _ChartBarState extends State<ChartBar> {
           const SizedBox(height: 5),
           Row(
             children: [
-              // Spacer(),
               custom.DropdownMenu(
                 selectedCategory: selectedCategory,
                 onCategoryChanged: _onCategoryChanged,
@@ -55,9 +68,9 @@ class _ChartBarState extends State<ChartBar> {
           ),
           const SizedBox(height: 8),
           Expanded(
-            child: InventoryBarChart(
-              selectedCategory: selectedCategory,
-            ),
+            child: provider.isLoading ? const Center(
+              child: CircularProgressIndicator(),
+              ) : InventoryBarChart(selectedCategory: selectedCategory, dataBarang: provider.dataBarang),
           ),
         ],
       ),

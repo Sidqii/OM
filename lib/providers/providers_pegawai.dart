@@ -5,16 +5,17 @@ import 'package:pusdatin_end/services/services_pegawai.dart';
 
 class ProviderPegawai extends ChangeNotifier {
   final ServicesPegawai _servicesPegawai = ServicesPegawai();
-  List<DatasetPegawai>? _Pegawai;
+  List<DatasetPegawai>? _pegawai;
+  List<DatasetPegawai>? _filterPegawai;
   bool _isLoading = false;
   String? _errorMessage;
 
-  List<DatasetPegawai>? get pegawai => _Pegawai;
+  List<DatasetPegawai>? get pegawai => _filterPegawai ?? _pegawai;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
   Future<void>fetchPegawai() async {
-    if (_Pegawai != null) return;
+    if (_pegawai != null) return;
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -25,9 +26,10 @@ class ProviderPegawai extends ChangeNotifier {
 
       if (pegawai.isEmpty) {
         _errorMessage = 'Tidak ada data';
-        _Pegawai = null;
+        _pegawai = null;
       } else {
-        _Pegawai = pegawai;
+        _pegawai = pegawai;
+        _filterPegawai = pegawai;
       }
     } catch (e) {
       if (e is SocketException) {
@@ -40,5 +42,16 @@ class ProviderPegawai extends ChangeNotifier {
       _isLoading = true;
       notifyListeners();
     }
+  }
+
+  void applyFilter(String query){
+    if (query.isEmpty) {
+      _filterPegawai = _pegawai;
+    } else {
+      _filterPegawai = _pegawai!.where((pegawai){
+        return pegawai.nama.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    }
+    notifyListeners();
   }
 }

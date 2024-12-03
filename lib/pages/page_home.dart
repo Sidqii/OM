@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pusdatin_end/menu/approvement/menu_approvement.dart';
 import 'package:pusdatin_end/menu/inventory/sub_menu/sub_inventori.dart';
+import 'package:pusdatin_end/menu/pengajuan/menu_pengajuan.dart';
 import 'package:pusdatin_end/menu/profile/menu_profile.dart';
 import 'package:pusdatin_end/menu/report/menu_report.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
@@ -40,7 +41,9 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => InventoriPage(user: widget.user,)),
+              builder: (context) => InventoriPage(
+                    user: widget.user,
+                  )),
         );
         break;
       case 2:
@@ -51,11 +54,20 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ApprovePage(user: widget.user)),
-        );
+        if (widget.user.level.toLowerCase() == 'admin' ||
+            widget.user.level.toLowerCase() == 'employee') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ApprovePage(user: widget.user)),
+          );
+        } else if (widget.user.level.toLowerCase() == 'user') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoanRequestPage(user: widget.user)),
+          );
+        }
         break;
     }
   }
@@ -73,13 +85,15 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             CalendarCard(),
             const SizedBox(height: 20),
-            if (widget.user.level.toLowerCase() == 'admin' || widget.user.level.toLowerCase() == 'employee') ChartBar(),
+            if (widget.user.level.toLowerCase() == 'admin' ||
+                widget.user.level.toLowerCase() == 'employee')
+              ChartBar(),
             if (widget.user.level.toLowerCase() == 'user') InventoryStatusCard()
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profil',
@@ -92,10 +106,17 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.bar_chart),
             label: 'Laporan',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Persetujuan',
-          ),
+          if (widget.user.level.toLowerCase() == 'admin' ||
+              widget.user.level.toLowerCase() == 'employee')
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.book),
+              label: 'Persetujuan',
+            ),
+          if (widget.user.level.toLowerCase() == 'user')
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.add_box),
+              label: 'Pengajuan',
+            ),
         ],
         backgroundColor: Colors.white,
         currentIndex: _selectedIndex,

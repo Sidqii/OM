@@ -9,7 +9,7 @@ class DropdownMenu extends StatefulWidget {
     Key? key,
     required this.selectedCategory,
     required this.onCategoryChanged,
-    this.items = const ['Kondisi', 'Merek'],
+    this.items = const ['Kondisi', 'Status'],
   }) : super(key: key);
 
   @override

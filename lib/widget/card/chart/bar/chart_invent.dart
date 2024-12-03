@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:pusdatin_end/dummy/dummy_dataBarag.dart';
+import 'package:pusdatin_end/models/dataset/dataset_databarang.dart';
 
 class InventoryBarChart extends StatelessWidget {
   final String selectedCategory;
+  final List<DatasetDatabarang>? dataBarang;
 
   const InventoryBarChart({
     Key? key,
     required this.selectedCategory,
+    required this.dataBarang,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final data =
-        _generateSampleData();
+
+    if (dataBarang == null || dataBarang!.isEmpty) {
+      print('Data barang yang diterima di chart: $dataBarang');
+      return const Center(
+        child: Text('Data tidak tersedia'),
+      );
+    }
+
+    final data = _generateSampleData();
 
     return SafeArea(
       child: MouseRegion(
@@ -23,7 +32,7 @@ class InventoryBarChart extends StatelessWidget {
                 BarChartData(
                   backgroundColor: Colors.transparent,
                   alignment: BarChartAlignment.spaceAround,
-                  maxY: 50,
+                  maxY: 10,
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       tooltipRoundedRadius: 8,
@@ -57,8 +66,8 @@ class InventoryBarChart extends StatelessWidget {
                         getTitlesWidget: (value, meta) {
                           final labels = selectedCategory == 'Kondisi'
                               ? ['Baik', 'Rusak Ringan', 'Rusak Berat']
-                              : selectedCategory == 'Merek'
-                                  ? ['Gems', 'Geode', 'Artisan']
+                              : selectedCategory == 'Status'
+                                  ? ['Dipinjam', 'Dipelihara', 'Request']
                                   : [];
                           final labelText = value.toInt() < labels.length
                               ? labels[value.toInt()]
@@ -113,27 +122,27 @@ class InventoryBarChart extends StatelessWidget {
   List<int> getDataByCategory() {
     if (selectedCategory == 'Kondisi') {
       return [
-        dummyItems
+        dataBarang!
             .where((item) => item.kondisi == 'Baik')
-            .fold(0, (sum, item) => sum + item.jmlBarang),
-        dummyItems
+            .fold(0, (sum, item) => sum + item.jumlah),
+        dataBarang!
             .where((item) => item.kondisi == 'Rusak Ringan')
-            .fold(0, (sum, item) => sum + item.jmlBarang),
-        dummyItems
+            .fold(0, (sum, item) => sum + item.jumlah),
+        dataBarang!
             .where((item) => item.kondisi == 'Rusak Berat')
-            .fold(0, (sum, item) => sum + item.jmlBarang),
+            .fold(0, (sum, item) => sum + item.jumlah),
       ];
-    } else if (selectedCategory == 'Merek') {
+    } else if (selectedCategory == 'Status') {
       return [
-        dummyItems
-            .where((item) => item.mrkBarang == 'Gems')
-            .fold(0, (sum, item) => sum + item.jmlBarang),
-        dummyItems
-            .where((item) => item.mrkBarang == 'Geode')
-            .fold(0, (sum, item) => sum + item.jmlBarang),
-        dummyItems
-            .where((item) => item.mrkBarang == 'Artisan')
-            .fold(0, (sum, item) => sum + item.jmlBarang)
+        dataBarang!
+            .where((item) => item.status == 'Dipinjam')
+            .fold(0, (sum, item) => sum + item.jumlah),
+        dataBarang!
+            .where((item) => item.status == 'Dipelihara')
+            .fold(0, (sum, item) => sum + item.jumlah),
+        dataBarang!
+            .where((item) => item.status == 'Request')
+            .fold(0, (sum, item) => sum + item.jumlah),
       ];
     }
     return [];
