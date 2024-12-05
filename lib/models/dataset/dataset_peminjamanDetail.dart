@@ -24,7 +24,7 @@ class DatasetPeminjamandetail {
       namaPegawai: json['nama_pegawai'] ?? 'Tidak ada nama',
       instansi: json['instansi'] ?? 'Tidak ada instansi',
       hal: json['hal'] ?? 'Tidak ada hal',
-      tanggalPengembalian: json['tanggal_pengembalian'] ?? 'Tanggal belum ditentukan',
+      tanggalPengembalian: json['tanggal_pengembalian'] ?? ' - ',
       inventaris: inventarisList,
     );
   }
@@ -33,16 +33,19 @@ class DatasetPeminjamandetail {
 class Inventaris {
   final String namaInventaris;
   final String kondisi;
+  final String foto;
 
   Inventaris({
     required this.namaInventaris,
     required this.kondisi,
+    required this.foto,
   });
 
   factory Inventaris.fromJson(Map<String, dynamic> json) {
     return Inventaris(
       namaInventaris: json['nama_inventaris'] ?? 'Tidak ada nama inventaris',
       kondisi: json['kondisi'] ?? 'Tidak ada kondisi',
+      foto: json['foto'] ?? 'Tidak ada foto',
     );
   }
 }

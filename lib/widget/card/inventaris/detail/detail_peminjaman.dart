@@ -1,18 +1,12 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:pusdatin_end/models/dataset/dataset_peminjaman.dart';
 import 'package:pusdatin_end/widget/component/comp_kembali.dart';
-import 'package:pusdatin_end/models/dataset/dataset_pegawai.dart';
-import 'package:pusdatin_end/models/dataset/dataset_databarang.dart';
-import 'package:pusdatin_end/models/dataset/dataset_pemeliharaan.dart';
+import 'package:pusdatin_end/models/dataset/dataset_peminjamanDetail.dart';
 
 class detailPeminjaman extends StatelessWidget {
-  final DatasetPemeliharaan pelihara;
-  final DatasetDatabarang item;
-  final DatasetPegawai pegawai;
-  final DatasetPeminjaman pinjam;
-  
-  detailPeminjaman({required this.item, required this.pegawai, required this.pelihara, required this.pinjam});
+  final DatasetPeminjamandetail detail;
+
+  detailPeminjaman({required this.detail});
 
   String formatDate(String date) {
     try {
@@ -23,6 +17,14 @@ class detailPeminjaman extends StatelessWidget {
     }
   }
 
+  String formatInventaris(List<Inventaris> inventaris) {
+    return inventaris.map((e) => e.namaInventaris).join(', ');
+  }
+
+  String formatInv(List<Inventaris> inventaris) {
+    return inventaris.map((e) => e.kondisi).join(', ');
+  }
+
   Widget _buildSingleField(String label, String value, bool isDropdown) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +33,6 @@ class detailPeminjaman extends StatelessWidget {
           label,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
         ),
-        // const SizedBox(height: 5),
         isDropdown
             ? DropdownButtonFormField<String>(
                 value: value,
@@ -43,7 +44,6 @@ class detailPeminjaman extends StatelessWidget {
                 }).toList(),
                 onChanged: (newValue) {},
                 decoration: InputDecoration(
-                  // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   border: UnderlineInputBorder(),
                 ),
               )
@@ -51,7 +51,6 @@ class detailPeminjaman extends StatelessWidget {
                 initialValue: value,
                 readOnly: true,
                 decoration: InputDecoration(
-                  // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   border: UnderlineInputBorder(),
                 ),
               ),
@@ -89,13 +88,10 @@ class detailPeminjaman extends StatelessWidget {
                 initialValue: value,
                 readOnly: true,
                 textAlign: TextAlign.start,
-                maxLines: label.contains('Ket.')
-                    ? null
-                    : 1, // null = otomatis sesuai teks
+                maxLines: label.contains('Ket.') ? null : 1,
                 decoration: InputDecoration(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10),
-                  border: const UnderlineInputBorder(), // Garis bawah saja
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                  border: const UnderlineInputBorder(),
                 ),
               ),
       ],
@@ -104,6 +100,9 @@ class detailPeminjaman extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pageController = PageController();
+    final invenImages = detail.inventaris.map((e) => e.foto).toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CompKembali(
@@ -167,69 +166,116 @@ class detailPeminjaman extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Gambar Barang dengan Placeholder
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                item.foto,
-                width: double.infinity,
-                height: 150,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                (loadingProgress.expectedTotalBytes ?? 1)
-                            : null,
-                      ),
-                    );
-                  }
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Icon(
-                    Icons.broken_image,
-                    size: 150,
-                    color: Colors.red,
-                  );
-                },
+            // Slider untuk Gambar Barang
+            SizedBox(
+              height: 200,
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    controller: pageController,
+                    itemCount: invenImages.length,
+                    itemBuilder: (context, index) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          invenImages[index],
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.broken_image,
+                              size: 150,
+                              color: Colors.red,
+                            );
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        (loadingProgress.expectedTotalBytes ??
+                                            1)
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  // Tombol Navigasi Kiri
+                  Positioned(
+                    left: 10,
+                    top: 75,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios),
+                      onPressed: () {
+                        int prevIndex = pageController.page!.toInt() - 1;
+                        if (prevIndex < 0) {
+                          prevIndex = 0;
+                        }
+                        pageController.jumpToPage(
+                          prevIndex,
+                        );
+                      },
+                    ),
+                  ),
+                  // Tombol Navigasi Kanan
+                  Positioned(
+                    right: 10,
+                    top: 75,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_forward_ios),
+                      onPressed: () {
+                        int nextIndex = pageController.page!.toInt() + 1;
+                        if (nextIndex >= invenImages.length) {
+                          nextIndex = 0;
+                        }
+                        pageController.jumpToPage(
+                          nextIndex,
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 35),
-            _buildSingleField('Penanggung Jawab', pegawai.nama, false),
-            const SizedBox(height: 15),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildSingleField('Status Barang', pelihara.status, false),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: _buildSingleField('Tanggal Pemeliharaan', formatDate('${pelihara.tanggal_pemeliharaan}'), false),
-                ),
-              ],
-            ),
-            const SizedBox(height: 35),
-            _buildSingleField('Jenis Barang', item.merk, false),
+            const SizedBox(height: 30),
+            // Informasi Detail
+            _buildSingleField('Penanggung Jawab', detail.namaPegawai, false),
             const SizedBox(height: 15),
             Row(
               children: [
                 Expanded(
                   child: _buildSingleField(
-                      'Jumlah', '${pelihara.jumlah}', false),
+                      'Inventaris', formatInventaris(detail.inventaris), false),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: _buildSingleField(
-                    'Kondisi', pelihara.kondisi, false),
+                      'Kondisi', formatInv(detail.inventaris), false),
                 ),
               ],
             ),
-            const SizedBox(height: 35),
-            _buildBoxField('Ket. Kerusakan Barang:', pelihara.keterangan, false),
+            const SizedBox(height: 30),
+            _buildSingleField('Nama Peminjam', detail.namaPeminjam, false),
+            const SizedBox(height: 15),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildSingleField('Instansi', detail.instansi, false),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _buildSingleField('Tanggal Pengembalian',
+                      formatDate(detail.tanggalPengembalian), false),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+            _buildBoxField('Hal', detail.hal, false),
             const SizedBox(height: 10),
           ],
         ),
