@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
+import 'package:pusdatin_end/providers/providers_login.dart';
 import 'package:pusdatin_end/widget/component/comp_kembali.dart';
 
 class profilePage extends StatelessWidget {
@@ -24,10 +25,8 @@ class profilePage extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Logout berhasil!")),
-              );
-              SystemNavigator.pop();
+              Provider.of<AuthService>(context, listen: false).logout();
+              Navigator.of(context).pushReplacementNamed('/login');
             },
             child: const Text("Logout"),
           ),
@@ -58,7 +57,7 @@ class profilePage extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            'Selamat datang ${user.name}, ${user.level}',
+            'Selamat datang ${user.level} ${user.name}!',
             style: TextStyle(
               fontSize: 14,
               color: Colors.black,
@@ -115,7 +114,7 @@ class profilePage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 45),
+              const SizedBox(height: 55),
               GestureDetector(
                 onTap: () {
                   _onLogoutPressed(context);

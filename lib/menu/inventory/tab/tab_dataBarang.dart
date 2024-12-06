@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
 import 'package:pusdatin_end/providers/providers_dataBarang.dart';
-import 'package:pusdatin_end/widget/card/inventaris/card/card_dataBarang.dart';
 import 'package:pusdatin_end/widget/component/comp_cardLoad.dart';
+import 'package:pusdatin_end/widget/card/inventaris/card/card_dataBarang.dart';
 
 class TabDatabarang extends StatefulWidget {
   final pengguna user;
