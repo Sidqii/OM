@@ -32,7 +32,7 @@ class InventoryBarChart extends StatelessWidget {
                 BarChartData(
                   backgroundColor: Colors.transparent,
                   alignment: BarChartAlignment.spaceAround,
-                  maxY: 10,
+                  maxY: 5,
                   barTouchData: BarTouchData(
                     touchTooltipData: BarTouchTooltipData(
                       tooltipRoundedRadius: 8,

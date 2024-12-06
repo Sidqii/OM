@@ -5,8 +5,8 @@ import 'package:pusdatin_end/models/dataset/dataset_pemeliharaan.dart';
 class ServicesPemeliharaan {
   Future<List<DatasetPemeliharaan>> fetchPemeliharaan() async {
     final response = await http.get(
-      // Uri.parse('http://localhost:8000/api/lapor'),
-      Uri.parse('http://10.0.2.2:8000/api/lapor'), //Mobile Device
+      Uri.parse('http://localhost:8000/api/lapor'),
+      // Uri.parse('http://10.0.2.2:8000/api/lapor'), //Mobile Device
     );
 
     if (response.statusCode == 200) {

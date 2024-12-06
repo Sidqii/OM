@@ -8,6 +8,7 @@ import 'package:pusdatin_end/models/mock/models_pengguna.dart';
 import 'package:pusdatin_end/widget/card/calendar/calendar_card.dart';
 import 'package:pusdatin_end/widget/card/chart/bar/chart_main.dart';
 import 'package:pusdatin_end/widget/card/chart/table/chart_list.dart';
+import 'package:pusdatin_end/widget/notifications/notif_page.dart';
 
 class HomePage extends StatefulWidget {
   final pengguna user;
@@ -156,6 +157,41 @@ class _HomePageState extends State<HomePage> {
                     style: const TextStyle(fontSize: 12, color: Colors.white70),
                   ),
                 ],
+              ),
+            ],
+          ),
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.notifications, color: Colors.white),
+                onPressed: () {
+                  // Navigasi ke halaman notifikasi
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationPage()),
+                  );
+                },
+              ),
+              // Badge notifikasi
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Text(
+                    '3', // Jumlah notifikasi, bisa diganti dengan variabel
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

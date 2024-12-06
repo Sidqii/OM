@@ -5,8 +5,8 @@ import 'package:pusdatin_end/models/dataset/dataset_databarang.dart';
 class ServicesDatabarang {
   Future<List<DatasetDatabarang>> fetchDataBarang() async {
     final response = await http.get(
-      // Uri.parse('http://localhost:8000/api/inven'),
-      Uri.parse('http://10.0.2.2:8000/api/inven'), //Mobile Device
+      Uri.parse('http://localhost:8000/api/inven'),
+      // Uri.parse('http://10.0.2.2:8000/api/inven'), //Mobile Device
     );
 
     if (response.statusCode == 200) {

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pusdatin_end/pages/tambah_dataBarang.dart';
+import 'package:pusdatin_end/pages/tambah_pemeliharaan.dart';
+import 'package:pusdatin_end/pages/tambah_peminjaman.dart';
 import 'package:pusdatin_end/providers/providers_dataBarang.dart';
 import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
 import 'package:pusdatin_end/providers/providers_peminjaman.dart';
+import 'package:pusdatin_end/widget/component/comp_search.dart';
 
 class MenuHeader extends StatefulWidget {
   final VoidCallback onEditData;
@@ -28,7 +32,6 @@ class _MenuHeaderState extends State<MenuHeader> {
     widget.tabController.addListener(() {
       final activeTabIndex = widget.tabController.index;
       print('Tab aktif diubah ke: $activeTabIndex');
-      // Tidak perlu tambahan logika disini karena filter akan dilakukan langsung saat mengetik
     });
   }
 
@@ -85,21 +88,46 @@ class _MenuHeaderState extends State<MenuHeader> {
                       tooltip: 'Edit Data',
                     ),
                     IconButton(
-                      onPressed: widget.onAddData,
+                      onPressed: () {
+                        final activeTabIndex = widget.tabController.index;
+
+                        if (activeTabIndex == 0) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => tambahDatabarang(),
+                            ),
+                          );
+                        } else if (activeTabIndex == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => tambahPemeliharaan(),
+                            ),
+                          );
+                        } else if (activeTabIndex == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => tambahPeminjaman(),
+                            ),
+                          );
+                        }
+                      },
                       icon: const Icon(Icons.add),
                       color: Colors.white,
                       iconSize: 24.0,
-                      tooltip: 'Tambah Data',
+                      tooltip: 'Tambah data',
                     ),
                     const SizedBox(width: 16.0),
                   ],
                   Expanded(
                     child: Consumer2<ProviderDatabarang, ProviderPemeliharaan>(
-                      builder: (context, dataBarangProvider, pemeliharaanProvider, child) {
-                        return TextField(
-                          onChanged: (query) {
+                      builder: (context, dataBarangProvider,
+                          pemeliharaanProvider, child) {
+                        return CompSearch(
+                          onSearch: (query) {
                             final activeTabIndex = widget.tabController.index;
-
                             // Penerapan filter berdasarkan tab yang aktif
                             if (activeTabIndex == 0) {
                               // Tab Data Barang
@@ -109,24 +137,11 @@ class _MenuHeaderState extends State<MenuHeader> {
                               pemeliharaanProvider.applyFilter(query);
                             } else if (activeTabIndex == 2) {
                               // Tab Peminjaman
-                              context.read<ProvidersPeminjaman>().applyFilter(query);
+                              context
+                                  .read<ProvidersPeminjaman>()
+                                  .applyFilter(query);
                             }
                           },
-                          decoration: InputDecoration(
-                            hintText: 'Cari',
-                            filled: true,
-                            fillColor: Colors.white,
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 12.0,
-                              horizontal: 12.0,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          style: const TextStyle(fontSize: 14.0),
                         );
                       },
                     ),
