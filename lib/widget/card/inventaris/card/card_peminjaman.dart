@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pusdatin_end/models/dataset/dataset_peminjamanDetail.dart';
 import 'package:pusdatin_end/providers/providers_peminjaman.dart';
 import 'package:pusdatin_end/widget/card/inventaris/detail/detail_peminjaman.dart';
-import 'package:pusdatin_end/widget/component/comp_cardLoad.dart';
+import 'package:pusdatin_end/widget/component/page/comp_cardLoad.dart';
 
 class CardPeminjaman extends StatefulWidget {
   final DatasetPeminjamandetail pinjam;
@@ -64,9 +64,6 @@ class _CardPeminjaman extends State<CardPeminjaman> {
                       SizedBox(height: 6),
                       Text('Inventaris', style: boldStyle),
                       Text(formatInv(widget.pinjam.inventaris)),
-                      // Text('Inventaris', style: boldStyle),
-                      // ...widget.pinjam.inventaris.map((item) =>
-                      //     Text('${item.namaInventaris}', style: subtitleStyle)),
                       SizedBox(height: 6),
                       Text('Nama Peminjam', style: boldStyle),
                       SizedBox(height: 2),

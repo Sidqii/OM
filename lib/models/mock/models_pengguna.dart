@@ -4,7 +4,7 @@ class pengguna {
   String email;
   String level;
   String password;
-  String avatar;
+  String? avatar;
 
   pengguna({
     required this.id,

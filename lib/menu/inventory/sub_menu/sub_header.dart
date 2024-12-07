@@ -6,7 +6,7 @@ import 'package:pusdatin_end/pages/tambah_peminjaman.dart';
 import 'package:pusdatin_end/providers/providers_dataBarang.dart';
 import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
 import 'package:pusdatin_end/providers/providers_peminjaman.dart';
-import 'package:pusdatin_end/widget/component/comp_search.dart';
+import 'package:pusdatin_end/widget/component/field/field_search.dart';
 
 class MenuHeader extends StatefulWidget {
   final VoidCallback onEditData;

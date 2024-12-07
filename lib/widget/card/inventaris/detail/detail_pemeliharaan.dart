@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:pusdatin_end/widget/component/comp_kembali.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 import 'package:pusdatin_end/models/dataset/dataset_pegawai.dart';
 import 'package:pusdatin_end/models/dataset/dataset_databarang.dart';
 import 'package:pusdatin_end/models/dataset/dataset_pemeliharaan.dart';
@@ -172,7 +172,7 @@ class detailPemeliharaan extends StatelessWidget {
                 item.foto,
                 width: double.infinity,
                 height: 150,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
                     return child;

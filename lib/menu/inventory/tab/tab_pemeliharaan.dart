@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
-import 'package:pusdatin_end/widget/component/comp_cardLoad.dart';
+import 'package:pusdatin_end/widget/component/page/comp_cardLoad.dart';
 import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
 import 'package:pusdatin_end/widget/card/inventaris/card/card_pemeliharaan.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// Widget tombol yang modular dan bisa digunakan kembali
 class CustomButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
@@ -10,15 +9,15 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity, // agar tombol lebar penuh seperti TextField
+      width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(3), // rounded corner
+            borderRadius: BorderRadius.circular(3),
           ),
-          padding: EdgeInsets.symmetric(vertical: 16), // padding vertikal
-          backgroundColor: Color(0xFF3D0E22), // warna latar belakang tombol
+          padding: EdgeInsets.symmetric(vertical: 16),
+          backgroundColor: Color(0xFF3D0E22),
         ),
         child: Text(
           label,

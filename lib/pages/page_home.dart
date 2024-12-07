@@ -142,7 +142,13 @@ class _HomePageState extends State<HomePage> {
               CircleAvatar(
                 radius: 20,
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage(widget.user.avatar),
+                backgroundImage:
+                    widget.user.avatar != null && widget.user.avatar!.isNotEmpty
+                        ? AssetImage(widget.user.avatar!)
+                        : null,
+                child: widget.user.avatar == null || widget.user.avatar!.isEmpty
+                    ? Icon(Icons.person, size: 45, color: Colors.white,)
+                    : null,
               ),
               const SizedBox(width: 10),
               Column(
@@ -165,7 +171,6 @@ class _HomePageState extends State<HomePage> {
               IconButton(
                 icon: const Icon(Icons.notifications, color: Colors.white),
                 onPressed: () {
-                  // Navigasi ke halaman notifikasi
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -173,7 +178,6 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
-              // Badge notifikasi
               Positioned(
                 right: 0,
                 top: 0,
@@ -184,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                     shape: BoxShape.circle,
                   ),
                   child: const Text(
-                    '3', // Jumlah notifikasi, bisa diganti dengan variabel
+                    '3',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 10,

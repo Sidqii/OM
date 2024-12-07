@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pusdatin_end/widget/component/comp_buttonCust.dart';
-import 'package:pusdatin_end/widget/component/comp_kembali.dart';
-import 'package:pusdatin_end/widget/component/comp_txtField.dart';
+import 'package:pusdatin_end/widget/component/field/field_button.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
+import 'package:pusdatin_end/widget/component/field/field_text.dart';
 
 class tambahPeminjaman extends StatefulWidget {
   @override

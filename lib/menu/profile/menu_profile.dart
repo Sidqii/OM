@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
 import 'package:pusdatin_end/providers/providers_login.dart';
-import 'package:pusdatin_end/widget/component/comp_kembali.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 
 class profilePage extends StatelessWidget {
   final pengguna user;
@@ -74,7 +74,13 @@ class profilePage extends StatelessWidget {
               ),
               child: CircleAvatar(
                 backgroundColor: Colors.transparent,
-                backgroundImage: AssetImage(user.avatar),
+                backgroundImage:
+                    user.avatar != null && user.avatar!.isNotEmpty
+                        ? AssetImage(user.avatar!)
+                        : null,
+                child: user.avatar == null || user.avatar!.isEmpty
+                    ? Icon(Icons.person, size: 150, color: Colors.grey[600])
+                    : null,
               ),
             ),
           ),
@@ -95,7 +101,7 @@ class profilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                    'PUSAT DATA DAN INFORMASI',
+                    'KEMENTRIAN DAN PERTAHANAN RI',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 14,
@@ -104,7 +110,7 @@ class profilePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Kementrian Pertahanan Republik Indonesia',
+                    'PUSAT DATA DAN INFORMASI',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 12,

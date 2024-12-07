@@ -4,7 +4,7 @@ import 'package:pusdatin_end/menu/inventory/tab/tab_dataBarang.dart';
 import 'package:pusdatin_end/menu/inventory/tab/tab_pemeliharaan.dart';
 import 'package:pusdatin_end/menu/inventory/tab/tab_peminjaman.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
-import 'package:pusdatin_end/widget/component/comp_kembali.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 
 class InventoriPage extends StatefulWidget {
   final pengguna user;

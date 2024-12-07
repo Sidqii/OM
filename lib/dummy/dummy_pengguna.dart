@@ -22,4 +22,11 @@ final List<pengguna> dummyUsers = [
       level: 'User',
       password: 'user123',
       avatar: 'assets/user/Harvey.png'),
+  pengguna(
+      id: 50,
+      name: 'Marley',
+      email: 'mar@mail.com',
+      level: 'employee',
+      password: 'mar123',
+      avatar: ''),
 ];

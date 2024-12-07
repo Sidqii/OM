@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pusdatin_end/widget/component/comp_buttonCust.dart';
-import 'package:pusdatin_end/widget/component/comp_kembali.dart';
-import 'package:pusdatin_end/widget/component/comp_txtField.dart';
+import 'package:pusdatin_end/widget/component/field/field_calendar.dart';
+import 'package:pusdatin_end/widget/component/field/field_dropdown.dart';
+import 'package:pusdatin_end/widget/component/field/field_lisensi.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
+import 'package:pusdatin_end/widget/component/field/field_text.dart';
+import 'package:pusdatin_end/widget/component/field/field_button.dart';
 
 class tambahDatabarang extends StatefulWidget {
   @override
@@ -156,17 +159,14 @@ class _tambahDatabarang extends State<tambahDatabarang> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CompTxtfield(
+                                  DrpField(
                                     label: 'Kondisi Barang',
                                     controller: _kondisiBarangController,
-                                    errorText: _kondisiBarangError,
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _kondisiBarangError = null;
-                                        },
-                                      );
+                                    errorText: null,
+                                    onChanged: (selected) {
+                                      print('Kondisi yang dipilih: $selected');
                                     },
+                                    items: ['Baik', 'Rusak Ringan', 'Rusak Berat'],
                                   ),
                                 ],
                               ),
@@ -194,7 +194,7 @@ class _tambahDatabarang extends State<tambahDatabarang> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CompTxtfield(
+                                  TglField(
                                     label: 'Tanggal Masuk Barang',
                                     controller: _tanggalMasukController,
                                     errorText: _tanggalMasukError,
@@ -217,7 +217,7 @@ class _tambahDatabarang extends State<tambahDatabarang> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CompTxtfield(
+                                  LisField(
                                     label: 'Masa Lisensi Barang',
                                     controller: _masaLisensiController,
                                     errorText: _masaLisensiError,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/providers/providers_dataBarang.dart';
 import 'package:pusdatin_end/widget/card/inventaris/detail/detail_dataBarang.dart';
-import 'package:pusdatin_end/widget/component/comp_cardLoad.dart';
+import 'package:pusdatin_end/widget/component/page/comp_cardLoad.dart';
 import 'package:pusdatin_end/models/dataset/dataset_databarang.dart';
 
 class DataBarangCard extends StatefulWidget {
@@ -97,7 +97,7 @@ class _DataCardState extends State<DataBarangCard> {
                           widget.item.foto,
                           width: 150,
                           height: 150,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.broken_image,

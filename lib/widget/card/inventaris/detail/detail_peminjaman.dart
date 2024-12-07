@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:pusdatin_end/widget/component/comp_kembali.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 import 'package:pusdatin_end/models/dataset/dataset_peminjamanDetail.dart';
 
 class detailPeminjaman extends StatelessWidget {
@@ -180,7 +180,7 @@ class detailPeminjaman extends StatelessWidget {
                         child: Image.network(
                           invenImages[index],
                           width: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.broken_image,

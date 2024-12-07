@@ -2,8 +2,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
+import 'package:pusdatin_end/widget/component/page/comp_cardLoad.dart';
 import 'package:pusdatin_end/widget/card/inventaris/detail/detail_pemeliharaan.dart';
-import 'package:pusdatin_end/widget/component/comp_cardLoad.dart';
 
 class CardPemeliharaan extends StatefulWidget {
   final Pemeliharaan pelihara;
@@ -24,11 +24,12 @@ class _CardPemeliharaan extends State<CardPemeliharaan> {
       return date;
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final boldStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
     final subtitleStyle = TextStyle(color: Colors.grey[600], fontSize: 14);
+    
     final providerPelihara = Provider.of<ProviderPemeliharaan>(context);
 
     if (providerPelihara.isLoading) {

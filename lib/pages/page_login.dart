@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/pages/page_home.dart';
-import 'package:pusdatin_end/widget/component/comp_loading.dart';
+import 'package:pusdatin_end/widget/component/animate/comp_loading.dart';
 import 'package:pusdatin_end/providers/providers_login.dart';
 
 class LoginPage extends StatefulWidget {
