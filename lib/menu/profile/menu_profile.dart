@@ -40,7 +40,7 @@ class profilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CompKembali(
-        title: 'Menu',
+        title: 'Profile',
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

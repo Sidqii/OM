@@ -11,8 +11,8 @@ class reportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CompKembali(title: 'Menu'),
-      body: Center(child: Text('Welcome, ${user.name} - Level: ${user.level}')),
+      appBar: CompKembali(title: 'Laporan'),
+      body: Center(child: Text('Laman dalam Pengembangan')),
     );
   }
 }

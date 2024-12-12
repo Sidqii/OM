@@ -32,7 +32,7 @@ class CompKembali extends StatelessWidget implements PreferredSizeWidget {
                     onTap: onBack ?? () => Navigator.pop(context),
                     child: Row(
                       children: [
-                        Icon(Icons.arrow_back, color: Colors.black),
+                        Icon(Icons.arrow_back_ios, color: Colors.black),
                         SizedBox(width: 6.0),
                         Text(
                           title,

@@ -34,7 +34,7 @@ class _InventoriPageState extends State<InventoriPage> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CompKembali(
-        title: 'Menu',
+        title: 'Inventaris',
         onBack: () {
           Navigator.pop(context);
         },

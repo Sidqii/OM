@@ -80,13 +80,13 @@ class _MenuHeaderState extends State<MenuHeader> {
                 children: [
                   if (widget.userLevel.toLowerCase() == 'admin' ||
                       widget.userLevel.toLowerCase() == 'employee') ...[
-                    IconButton(
-                      onPressed: widget.onEditData,
-                      icon: const Icon(Icons.edit),
-                      color: Colors.white,
-                      iconSize: 24.0,
-                      tooltip: 'Edit Data',
-                    ),
+                    // IconButton(
+                    //   onPressed: widget.onEditData,
+                    //   icon: const Icon(Icons.edit),
+                    //   color: Colors.white,
+                    //   iconSize: 24.0,
+                    //   tooltip: 'Edit Data',
+                    // ),
                     IconButton(
                       onPressed: () {
                         final activeTabIndex = widget.tabController.index;

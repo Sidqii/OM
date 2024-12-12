@@ -11,8 +11,8 @@ class ApprovePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CompKembali(title: 'Menu'),
-      body: Center(child: Text('Welcome, ${user.name} - Level: ${user.level}')),
+      appBar: CompKembali(title: 'Persetujuan'),
+      body: Center(child: Text('Laman dalam Pengembangan')),
     );
   }
 }

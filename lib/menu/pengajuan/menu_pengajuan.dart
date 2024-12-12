@@ -92,7 +92,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CompKembali(title: 'Menu'),
+      appBar: CompKembali(title: 'Pengajuan Peminjaman'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
