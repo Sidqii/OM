@@ -6,6 +6,7 @@ class DatasetPegawai {
   final String pangkat;
   final String nrp;
   final String jabatan;
+  final String foto;
 
   DatasetPegawai({
     required this.id,
@@ -15,6 +16,7 @@ class DatasetPegawai {
     required this.pangkat,
     required this.nrp,
     required this.jabatan,
+    required this.foto,
   });
 
   factory DatasetPegawai.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class DatasetPegawai {
       pangkat: json['pangkat']?.toString() ?? '',
       nrp: json['nrp']?.toString() ?? '',
       jabatan: json['jabatan']?.toString() ?? '',
+      foto: json['foto']?.toString()??'',
     );
   }
 

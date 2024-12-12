@@ -59,6 +59,7 @@ class ProviderPemeliharaan extends ChangeNotifier {
             pangkat: '',
             nrp: '',
             jabatan: '',
+            foto: '',
           ),
         );
 

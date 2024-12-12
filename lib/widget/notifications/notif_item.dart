@@ -14,7 +14,8 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: AssetImage(imagePath),
+        backgroundColor: Colors.white,
+        backgroundImage: AssetImage('assets/logo/pusdatin.png'),
         radius: 25,
       ),
       title: Text(

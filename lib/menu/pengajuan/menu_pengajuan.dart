@@ -6,6 +6,7 @@ import 'package:pusdatin_end/widget/component/field/field_text.dart';
 
 class LoanRequestPage extends StatefulWidget {
   final pengguna user;
+  
 LoanRequestPage({required this.user});
   @override
   _tambahPeminjaman createState() => _tambahPeminjaman();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 import 'package:pusdatin_end/widget/notifications/notif_item.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -6,7 +7,6 @@ class NotificationPage extends StatelessWidget {
 
   final List<Map<String, String>> notifications = const [
     {
-      "image": "assets/pusdatin.png",
       "message": "Pemeliharaan barang sudah hampir selesai!"
     },
     {
@@ -15,7 +15,7 @@ class NotificationPage extends StatelessWidget {
     },
     {
       "image": "assets/pusdatin.png",
-      "message": "[nama_pegawai] meminta untuk melakukan pemeliharaan barang!"
+      "message": "Pengurus meminta untuk melakukan pemeliharaan barang!"
     },
     {
       "image": "assets/pusdatin.png",
@@ -31,22 +31,26 @@ class NotificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("Notifikasi"),
+      appBar: CompKembali(
+        title: 'Menu',
       ),
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              NotificationItem(
-                imagePath: notifications[index]["image"]!,
-                message: notifications[index]["message"]!,
-              ),
-              const Divider(),
-            ],
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: ListView.builder(
+          itemCount: notifications.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                NotificationItem(
+                  imagePath: notifications[index]["image"]??'assets/logo/pusdatin.png',
+                  message: notifications[index]["message"]!,
+                ),
+                SizedBox(height: 10),
+                const Divider(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

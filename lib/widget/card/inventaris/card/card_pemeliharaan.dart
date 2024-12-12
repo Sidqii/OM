@@ -90,7 +90,33 @@ class _CardPemeliharaan extends State<CardPemeliharaan> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        print('Gambar ditekan');
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          widget.pelihara.pegawai.foto,
+                          width: 150,
+                          height: 150,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.broken_image,
+                              size: 150,
+                              color: Colors.red,
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),
