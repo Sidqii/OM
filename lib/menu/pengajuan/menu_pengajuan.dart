@@ -101,7 +101,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 35.0, top: 10.0),
               child: Text(
-                'Peminjaman Barang', // Ganti dengan sub judul yang diinginkan
+                'Peminjaman Barang',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -118,7 +118,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                   child: Column(
                     children: <Widget>[
                       CompTxtfield(
-                        label: 'Nama Penanggung Jawab',
+                        label: 'Nama Peminjam',
                         controller: _nmPenanggungjawabController,
                         errorText: _nmPenaggungJawabError,
                         onChanged: (value) {
@@ -179,7 +179,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                       ),
                       SizedBox(height: 35),
                       CompTxtfield(
-                        label: 'Golongan Peminjam',
+                        label: 'NRP Peminjam',
                         controller: _golonganPeminjamController,
                         errorText: _golonganPeminjamError,
                         onChanged: (value) {
@@ -198,7 +198,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CompTxtfield(
-                                    label: 'NRP Peminjam',
+                                    label: 'Merk Barang',
                                     controller: _NRPpeminjamController,
                                     errorText: _NRPpeminjamError,
                                     onChanged: (value) {
@@ -221,7 +221,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CompTxtfield(
-                                    label: 'Nama Peminjam',
+                                    label: 'Nama Barang',
                                     controller: _namaPeminjamController,
                                     errorText: _namaPeminjamError,
                                     onChanged: (value) {
@@ -250,55 +250,55 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                         },
                       ),
                       SizedBox(height: 3),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CompTxtfield(
-                                    label: 'Inventaris',
-                                    controller: _InventarisController,
-                                    errorText: _InventarisError,
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _InventarisError = null;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CompTxtfield(
-                                    label: 'Foto Barang',
-                                    controller: _fotoBarangController,
-                                    errorText: _fotoBarangError,
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _fotoBarangError = null;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(right: 8.0),
+                      //         child: Column(
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: [
+                      //             CompTxtfield(
+                      //               label: 'Hal',
+                      //               controller: _InventarisController,
+                      //               errorText: _InventarisError,
+                      //               onChanged: (value) {
+                      //                 setState(
+                      //                   () {
+                      //                     _InventarisError = null;
+                      //                   },
+                      //                 );
+                      //               },
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(width: 10),
+                      //     Expanded(
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(left: 8.0),
+                      //         child: Column(
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: [
+                      //             CompTxtfield(
+                      //               label: 'Foto Barang',
+                      //               controller: _fotoBarangController,
+                      //               errorText: _fotoBarangError,
+                      //               onChanged: (value) {
+                      //                 setState(
+                      //                   () {
+                      //                     _fotoBarangError = null;
+                      //                   },
+                      //                 );
+                      //               },
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(height: 35),
                       CompTxtfield(
                         label: 'Hal',

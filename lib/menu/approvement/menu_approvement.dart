@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
+import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 
 class ApprovePage extends StatelessWidget {
   final pengguna user;
@@ -10,7 +11,7 @@ class ApprovePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text("Persetujuan Page")),
+      appBar: CompKembali(title: 'Menu'),
       body: Center(child: Text('Welcome, ${user.name} - Level: ${user.level}')),
     );
   }
