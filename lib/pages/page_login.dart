@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pusdatin_end/pages/page_home.dart';
+import 'package:pusdatin_end/pages/page_pemulihan.dart';
 import 'package:pusdatin_end/widget/component/animate/comp_loading.dart';
 import 'package:pusdatin_end/providers/providers_login.dart';
 
@@ -310,12 +311,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildForgotPasswordLink() {
     return Align(
       alignment: Alignment.centerRight,
-      child: const Text(
-        'Lupa Password?',
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
+      child: InkWell(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PagePemulihan()));
+          },
+          child: const Text(
+            'Lupa Password?',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          )),
     );
   }
 }

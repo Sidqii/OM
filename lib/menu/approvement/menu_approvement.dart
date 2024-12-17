@@ -89,83 +89,58 @@ class ApprovePage extends StatelessWidget {
             return Center(child: Text('Tidak ada pengajuan barang.'));
           }
 
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                // Header dan Logo
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+          return PageView.builder(
+            itemCount: filteredData.length,
+            itemBuilder: (context, index) {
+              final item = filteredData[index];
+              return Card(
+                color: Colors.white,
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset(
-                          'assets/logo/pusdatin.png',
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 10),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Text(
-                              'INVENTARIS BARANG',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Image.asset(
+                              'assets/logo/pusdatin.png',
+                              width: 50,
+                              height: 50,
                             ),
-                            Text(
-                              'PUSDATIN KEMHAN',
-                              style: TextStyle(fontSize: 12),
+                            const SizedBox(width: 10),
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'INVENTARIS BARANG',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  'PUSDATIN KEMHAN',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Detail',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1,
-                          ),
-                        ),
-                        Text(
-                          'Pemeliharaan',
-                          style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 1,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                // Menampilkan Gambar Barang dalam Slider
-                SizedBox(
-                  height: 200,
-                  child: Stack(
-                    children: [
-                      PageView.builder(
-                        itemCount: filteredData.length,
-                        itemBuilder: (context, index) {
-                          final item = filteredData[index];
-                          final invenImages = item.inventaris.map((e) => e.foto).toList();
-                          return PageView.builder(
-                            itemCount: invenImages.length,
-                            itemBuilder: (context, imageIndex) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  invenImages[imageIndex],
+                        // Gambar Inventaris
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: item.inventaris.isNotEmpty
+                              ? Image.network(
+                                  item.inventaris.first.foto,
                                   width: double.infinity,
-                                  fit: BoxFit.cover,
+                                  height: 180,
+                                  fit: BoxFit.contain,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Icon(
                                       Icons.broken_image,
@@ -173,119 +148,103 @@ class ApprovePage extends StatelessWidget {
                                       color: Colors.red,
                                     );
                                   },
-                                  loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress.expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress.cumulativeBytesLoaded / 
-                                                (loadingProgress.expectedTotalBytes ?? 1)
-                                            : null,
-                                      ),
-                                    );
-                                  },
+                                )
+                              : Container(
+                                  width: double.infinity,
+                                  height: 180,
+                                  color: Colors.grey[300],
+                                  child: Center(
+                                    child: Text('Tidak ada gambar'),
+                                  ),
                                 ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                        ),
+                        const SizedBox(height: 20),
+                        _buildSingleField(
+                            'Nama Penanggung Jawab', item.namaPegawai, false),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildSingleField('Inventaris',
+                                  namaInventaris(item.inventaris), false),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: _buildSingleField('Kondisi',
+                                  kondisiInventaris(item.inventaris), false),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        _buildSingleField(
+                            'Nama Peminjam', item.namaPeminjam, false),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: _buildSingleField(
+                                  'Instansi', item.instansi, false),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: _buildSingleField('Hal', item.hal, false),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        _buildSingleField('Hal', item.hal, false),
+                        const SizedBox(height: 30),
+
+                        // Tombol Aksi
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                provider.approvePeminjaman([item]);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Peminjaman disetujui')),
+                                );
+                              },
+                              child: Text('Setujui',
+                                  style: TextStyle(color: Colors.white)),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green[800],
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            ElevatedButton(
+                              onPressed: () {
+                                provider.rejectPeminjaman([item]);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Peminjaman ditolak')),
+                                );
+                              },
+                              child: Text('Tolak',
+                                  style: TextStyle(color: Colors.white)),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red[800],
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                // Menampilkan Data Peminjaman
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: filteredData.length,
-                  itemBuilder: (context, index) {
-                    final item = filteredData[index];
-
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 8),
-                        _buildSingleField('Nama Penanggung Jawab', item.namaPegawai, false),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _buildSingleField('Inventaris', namaInventaris(item.inventaris), false),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: _buildSingleField('Kondisi', kondisiInventaris(item.inventaris), false),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 25),
-                        _buildSingleField('Nama Peminjam', item.namaPeminjam, false),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _buildSingleField('Instansi', item.instansi, false),
-                            ),
-                            SizedBox(width: 10),
-                            Expanded(
-                              child: _buildSingleField('Status', item.status, false),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 25),
-                        _buildSingleField('Hal', item.hal, false),
-                        SizedBox(height: 20),
-                      ],
-                    );
-                  },
-                ),
-                
-                // Tombol Persetujuan dan Penolakan
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Aksi persetujuan
-                        provider.approvePeminjaman(filteredData);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Peminjaman disetujui')),
-                        );
-                      },
-                      child: Text('Setujui', style: TextStyle(color: Colors.white),),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[800],
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)
-                        )
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Aksi penolakan
-                        provider.rejectPeminjaman(filteredData);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Peminjaman ditolak')),
-                        );
-                      },
-                      child: Text('Tolak', style: TextStyle(color: Colors.white),),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red[800],
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)
-                        )
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
+              );
+            },
           );
         },
       ),

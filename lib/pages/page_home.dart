@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ApprovePage(user: widget.user, status:'Request')),
+                builder: (context) => ApprovePage(user: widget.user, status:'request')),
           );
         } else if (widget.user.level.toLowerCase() == 'user') {
           Navigator.push(
