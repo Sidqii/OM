@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pusdatin_end/models/dataset/dataset_peminjamanDetail.dart';
 import 'package:pusdatin_end/services/services_peminjaman.dart';
 
-class ProviderPeminjaman extends ChangeNotifier {
+class ProviderPersetujuan extends ChangeNotifier {
   final ServicesPeminjaman _servicesPeminjaman = ServicesPeminjaman();
 
   List<DatasetPeminjamandetail>? _detail;
@@ -71,5 +71,21 @@ class ProviderPeminjaman extends ChangeNotifier {
       }).toList();
     }
     notifyListeners();
+  }
+
+  // Menambahkan metode untuk menyetujui peminjaman
+  void approvePeminjaman(List<DatasetPeminjamandetail> data) {
+    for (var item in data) {
+      item.status = 'Disetujui';  // Mengubah status menjadi "Disetujui"
+    }
+    notifyListeners();  // Memberi tahu bahwa data telah berubah, UI perlu diperbarui
+  }
+
+  // Menambahkan metode untuk menolak peminjaman
+  void rejectPeminjaman(List<DatasetPeminjamandetail> data) {
+    for (var item in data) {
+      item.status = 'Ditolak';  // Mengubah status menjadi "Ditolak"
+    }
+    notifyListeners();  // Memberi tahu bahwa data telah berubah, UI perlu diperbarui
   }
 }

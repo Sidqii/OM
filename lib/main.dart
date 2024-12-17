@@ -4,8 +4,9 @@ import 'package:pusdatin_end/pages/page_login.dart';
 import 'package:pusdatin_end/providers/providers_login.dart';
 import 'package:pusdatin_end/providers/providers_pegawai.dart';
 import 'package:pusdatin_end/providers/providers_dataBarang.dart';
-import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
 import 'package:pusdatin_end/providers/providers_peminjaman.dart';
+import 'package:pusdatin_end/providers/providers_pemeliharaan.dart';
+import 'package:pusdatin_end/providers/providers_persetujuan.dart';
 
 void main() {
   runApp(
@@ -14,8 +15,9 @@ void main() {
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => ProviderPegawai()),
         ChangeNotifierProvider(create: (context) => ProviderDatabarang()),
-        ChangeNotifierProvider(create: (context) => ProvidersPeminjaman()),
+        ChangeNotifierProvider(create: (context) => ProviderPeminjaman()),
         ChangeNotifierProvider(create: (context) => ProviderPemeliharaan()),
+        ChangeNotifierProvider(create: (context) => ProviderPersetujuan()),
         // -> Provider lain.
       ],
       child: MyApp(),

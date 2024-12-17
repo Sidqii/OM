@@ -111,7 +111,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                 ),
               ),
             ),
-            // Form
+            // Form Pengajuan
             Expanded(
               child: SingleChildScrollView(
                 child: Form(
@@ -311,7 +311,7 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                           });
                         },
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 85),
                       CustomButton(
                         label: 'Kirim',
                         onPressed: (){

@@ -102,13 +102,13 @@ class _CardPemeliharaan extends State<CardPemeliharaan> {
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
                           widget.pelihara.pegawai.foto,
-                          width: 150,
-                          height: 150,
+                          width: 130,
+                          height: 130,
                           fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
                             return Icon(
                               Icons.broken_image,
-                              size: 150,
+                              size: 130,
                               color: Colors.red,
                             );
                           },

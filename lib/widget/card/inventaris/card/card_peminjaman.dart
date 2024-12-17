@@ -19,10 +19,14 @@ class _CardPeminjaman extends State<CardPeminjaman> {
   Widget build(BuildContext context) {
     final boldStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
     final subtitleStyle = TextStyle(color: Colors.grey[600], fontSize: 14);
-    final providerPeminjaman = Provider.of<ProvidersPeminjaman>(context);
-    
+    final providerPeminjaman = Provider.of<ProviderPeminjaman>(context);
+
     String formatInv(List<Inventaris> inventaris) {
       return inventaris.map((e) => e.namaInventaris).join(' dan ');
+    }
+
+    String formatFoto(List<Inventaris> inventaris) {
+      return inventaris.map((e) => e.foto).join(',');
     }
 
     if (providerPeminjaman.isLoading) {
@@ -81,27 +85,32 @@ class _CardPeminjaman extends State<CardPeminjaman> {
                   ),
                 ),
                 SizedBox(width: 10),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.end,
-                //   children: [
-                //     ClipRRect(
-                //       borderRadius: BorderRadius.circular(10),
-                //       child: Image.network(
-                //         widget.pinjam.databarang.foto,
-                //         width: 150,
-                //         height: 150,
-                //         fit: BoxFit.cover,
-                //         errorBuilder: (context, error, stackkTrace) {
-                //           return Icon(
-                //             Icons.broken_image,
-                //             size: 150,
-                //             color: Colors.red,
-                //           );
-                //         },
-                //       ),
-                //     )
-                //   ],
-                // )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        print('Gambar ditekan');
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          formatFoto(widget.pinjam.inventaris),
+                          width: 130,
+                          height: 130,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.broken_image,
+                              size: 130,
+                              color: Colors.red,
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),

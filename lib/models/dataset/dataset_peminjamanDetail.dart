@@ -1,10 +1,11 @@
 class DatasetPeminjamandetail {
-  final String namaPeminjam;
-  final String namaPegawai;
-  final String instansi;
-  final String hal;
-  final String tanggalPengembalian;
-  final List<Inventaris> inventaris;
+  String namaPeminjam;
+  String namaPegawai;
+  String instansi;
+  String hal;
+  String tanggalPengembalian;
+  String status;
+  List<Inventaris> inventaris;
 
   DatasetPeminjamandetail({
     required this.namaPeminjam,
@@ -12,12 +13,14 @@ class DatasetPeminjamandetail {
     required this.instansi,
     required this.hal,
     required this.tanggalPengembalian,
+    required this.status,
     required this.inventaris,
   });
 
   factory DatasetPeminjamandetail.fromJson(Map<String, dynamic> json) {
     var list = json['inventaris'] as List;
-    List<Inventaris> inventarisList = list.map((i) => Inventaris.fromJson(i)).toList();
+    List<Inventaris> inventarisList =
+        list.map((i) => Inventaris.fromJson(i)).toList();
 
     return DatasetPeminjamandetail(
       namaPeminjam: json['nama_peminjam'] ?? 'Tidak ada nama',
@@ -25,15 +28,29 @@ class DatasetPeminjamandetail {
       instansi: json['instansi'] ?? 'Tidak ada instansi',
       hal: json['hal'] ?? 'Tidak ada hal',
       tanggalPengembalian: json['tanggal_pengembalian'] ?? ' - ',
+      status: json['status'] ?? ' - ',
       inventaris: inventarisList,
     );
+  }
+
+  //merubah format data menjadi Json
+  Map<String, dynamic> toJson() {
+    return {
+      'nama_peminjam': namaPeminjam,
+      'nama_pegawai': namaPegawai,
+      'instansi': instansi,
+      'hal': hal,
+      'tanggal_pengembalian': tanggalPengembalian,
+      'status': status,
+      'inventaris': inventaris.map((item) => item.toJson()).toList(),
+    };
   }
 }
 
 class Inventaris {
-  final String namaInventaris;
-  final String kondisi;
-  final String foto;
+  String namaInventaris;
+  String kondisi;
+  String foto;
 
   Inventaris({
     required this.namaInventaris,
@@ -47,5 +64,14 @@ class Inventaris {
       kondisi: json['kondisi'] ?? 'Tidak ada kondisi',
       foto: json['foto'] ?? 'Tidak ada foto',
     );
+  }
+
+  //merubah format data menjadi Json
+  Map<String, dynamic> toJson() {
+    return {
+      'nama_inventaris': namaInventaris,
+      'kondisi': kondisi,
+      'foto': foto,
+    };
   }
 }

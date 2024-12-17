@@ -13,9 +13,9 @@ class TabPeminjaman extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Memastikan data detail peminjaman di-fetch setiap kali widget ini ditampilkan
-    final provider = Provider.of<ProvidersPeminjaman>(context, listen: false);
+    final provider = Provider.of<ProviderPeminjaman>(context, listen: false);
     if (provider.detail == null) {
-      provider.fetchPeminjamanDetail(user.id);
+      provider.fetchPeminjamanDetail();
     }
 
     return Scaffold(
@@ -29,7 +29,7 @@ class TabPeminjaman extends StatelessWidget {
           ),
         ),
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
-        child: Consumer<ProvidersPeminjaman>(
+        child: Consumer<ProviderPeminjaman>(
           builder: (context, provider, child) {
             if (provider.isLoading) {
               return const Center(

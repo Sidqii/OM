@@ -58,45 +58,45 @@ class detailPeminjaman extends StatelessWidget {
     );
   }
 
-  Widget _buildBoxField(String label, String value, bool isDropdown) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(height: 5),
-        isDropdown
-            ? DropdownButtonFormField<String>(
-                value: value,
-                items: [value].map((String item) {
-                  return DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(item),
-                  );
-                }).toList(),
-                onChanged: (newValue) {},
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              )
-            : TextFormField(
-                initialValue: value,
-                readOnly: true,
-                textAlign: TextAlign.start,
-                maxLines: label.contains('Ket.') ? null : 1,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  border: const UnderlineInputBorder(),
-                ),
-              ),
-      ],
-    );
-  }
+  // Widget _buildBoxField(String label, String value, bool isDropdown) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         label,
+  //         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+  //       ),
+  //       const SizedBox(height: 5),
+  //       isDropdown
+  //           ? DropdownButtonFormField<String>(
+  //               value: value,
+  //               items: [value].map((String item) {
+  //                 return DropdownMenuItem<String>(
+  //                   value: item,
+  //                   child: Text(item),
+  //                 );
+  //               }).toList(),
+  //               onChanged: (newValue) {},
+  //               decoration: InputDecoration(
+  //                 contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+  //                 border: OutlineInputBorder(
+  //                   borderRadius: BorderRadius.circular(5),
+  //                 ),
+  //               ),
+  //             )
+  //           : TextFormField(
+  //               initialValue: value,
+  //               readOnly: true,
+  //               textAlign: TextAlign.start,
+  //               maxLines: label.contains('Ket.') ? null : 1,
+  //               decoration: InputDecoration(
+  //                 contentPadding: const EdgeInsets.symmetric(vertical: 10),
+  //                 border: const UnderlineInputBorder(),
+  //               ),
+  //             ),
+  //     ],
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +154,7 @@ class detailPeminjaman extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Pemeliharaan',
+                      'Peminjaman',
                       style: TextStyle(
                         fontSize: 14,
                         letterSpacing: 1,
@@ -275,8 +275,13 @@ class detailPeminjaman extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
-            _buildBoxField('Hal', detail.hal, false),
-            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(child: _buildSingleField('Status', detail.status, false),),
+                const SizedBox(width: 10),
+              Expanded(child: _buildSingleField('Hal', detail.hal, false),),
+              ],
+            )
           ],
         ),
       ),

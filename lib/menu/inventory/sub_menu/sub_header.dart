@@ -78,19 +78,22 @@ class _MenuHeaderState extends State<MenuHeader> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  if (widget.userLevel.toLowerCase() == 'admin') ...[
+                    // Edit Button
+                    IconButton(
+                      onPressed: widget.onEditData,
+                      icon: const Icon(Icons.edit),
+                      color: Colors.white,
+                      iconSize: 24.0,
+                      tooltip: 'Edit Data',
+                    ),
+                  ],
                   if (widget.userLevel.toLowerCase() == 'admin' ||
                       widget.userLevel.toLowerCase() == 'employee') ...[
-                    // IconButton(
-                    //   onPressed: widget.onEditData,
-                    //   icon: const Icon(Icons.edit),
-                    //   color: Colors.white,
-                    //   iconSize: 24.0,
-                    //   tooltip: 'Edit Data',
-                    // ),
+                    // Tambah Button
                     IconButton(
                       onPressed: () {
                         final activeTabIndex = widget.tabController.index;
-
                         if (activeTabIndex == 0) {
                           Navigator.push(
                             context,
@@ -138,7 +141,7 @@ class _MenuHeaderState extends State<MenuHeader> {
                             } else if (activeTabIndex == 2) {
                               // Tab Peminjaman
                               context
-                                  .read<ProvidersPeminjaman>()
+                                  .read<ProviderPeminjaman>()
                                   .applyFilter(query);
                             }
                           },

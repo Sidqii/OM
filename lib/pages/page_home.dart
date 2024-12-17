@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pusdatin_end/menu/approvement/menu_approvement.dart';
 import 'package:pusdatin_end/menu/inventory/sub_menu/sub_inventori.dart';
+import 'package:pusdatin_end/menu/approvement/menu_approvement.dart';
 import 'package:pusdatin_end/menu/pengajuan/menu_pengajuan.dart';
 import 'package:pusdatin_end/menu/profile/menu_profile.dart';
 import 'package:pusdatin_end/menu/report/menu_report.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
-import 'package:pusdatin_end/widget/card/calendar/calendar_card.dart';
-import 'package:pusdatin_end/widget/card/chart/bar/chart_main.dart';
-import 'package:pusdatin_end/widget/card/chart/table/chart_list.dart';
 import 'package:pusdatin_end/widget/notifications/notif_page.dart';
+import 'package:pusdatin_end/widget/card/chart/bar/chart_main.dart';
+import 'package:pusdatin_end/widget/card/calendar/calendar_card.dart';
 
 class HomePage extends StatefulWidget {
   final pengguna user;
@@ -42,9 +41,7 @@ class _HomePageState extends State<HomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => InventoriPage(
-                    user: widget.user,
-                  )),
+              builder: (context) => InventoriPage(user: widget.user)),
         );
         break;
       case 2:
@@ -60,7 +57,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ApprovePage(user: widget.user, dataBarang: [],)),
+                builder: (context) => ApprovePage(user: widget.user, status:'Request')),
           );
         } else if (widget.user.level.toLowerCase() == 'user') {
           Navigator.push(
@@ -89,7 +86,7 @@ class _HomePageState extends State<HomePage> {
             if (widget.user.level.toLowerCase() == 'admin' ||
                 widget.user.level.toLowerCase() == 'employee')
               ChartBar(),
-            if (widget.user.level.toLowerCase() == 'user') InventoryStatusCard()
+            if (widget.user.level.toLowerCase() == 'user') ChartBar()
           ],
         ),
       ),
@@ -147,7 +144,11 @@ class _HomePageState extends State<HomePage> {
                         ? AssetImage(widget.user.avatar!)
                         : null,
                 child: widget.user.avatar == null || widget.user.avatar!.isEmpty
-                    ? Icon(Icons.person, size: 45, color: Colors.white,)
+                    ? Icon(
+                        Icons.person,
+                        size: 45,
+                        color: Colors.grey[400],
+                      )
                     : null,
               ),
               const SizedBox(width: 10),
