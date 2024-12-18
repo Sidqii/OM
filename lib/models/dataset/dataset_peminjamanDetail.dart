@@ -4,6 +4,7 @@ class DatasetPeminjamandetail {
   String instansi;
   String hal;
   String tanggalPengembalian;
+  String tanggalPeminjaman;
   String status;
   List<Inventaris> inventaris;
 
@@ -13,6 +14,7 @@ class DatasetPeminjamandetail {
     required this.instansi,
     required this.hal,
     required this.tanggalPengembalian,
+    required this.tanggalPeminjaman,
     required this.status,
     required this.inventaris,
   });
@@ -28,6 +30,7 @@ class DatasetPeminjamandetail {
       instansi: json['instansi'] ?? 'Tidak ada instansi',
       hal: json['hal'] ?? 'Tidak ada hal',
       tanggalPengembalian: json['tanggal_pengembalian'] ?? ' - ',
+      tanggalPeminjaman: json['tanggal_peminjaman']??' - ',
       status: json['status'] ?? ' - ',
       inventaris: inventarisList,
     );
@@ -41,6 +44,7 @@ class DatasetPeminjamandetail {
       'instansi': instansi,
       'hal': hal,
       'tanggal_pengembalian': tanggalPengembalian,
+      'tanggal_peminjaman' : tanggalPeminjaman,
       'status': status,
       'inventaris': inventaris.map((item) => item.toJson()).toList(),
     };

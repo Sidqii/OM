@@ -5,13 +5,15 @@ class CompTxtfield extends StatefulWidget {
   final TextEditingController controller;
   final String? errorText;
   final Function(String) onChanged;
+  final String? Function(String?)? validator;
 
   const CompTxtfield({
     Key? key,
     required this.label,
     required this.controller,
-    required this.errorText,
+    this.errorText,
     required this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -20,6 +22,7 @@ class CompTxtfield extends StatefulWidget {
 
 class _CompTxtfieldState extends State<CompTxtfield> {
   late FocusNode _focusNode;
+  String? _currentError;
 
   @override
   void initState() {
@@ -59,24 +62,48 @@ class _CompTxtfieldState extends State<CompTxtfield> {
             decoration: InputDecoration(
               border: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: widget.errorText != null ? Colors.red : Colors.black54, // Border merah jika error
+                  color: _currentError != null ? Colors.red : Colors.black54, // Border merah jika error
                 ),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: widget.errorText != null ? Colors.red : Colors.black, // Border biru saat fokus
+                  color: _currentError != null ? Colors.red : Colors.black, // Border hitam saat fokus
                 ),
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: widget.errorText != null ? Colors.red : Colors.black54, // Border default jika tidak ada error
+                  color: _currentError != null ? Colors.red : Colors.black54, // Border default jika tidak ada error
                 ),
               ),
+              errorText: _currentError, // Menampilkan pesan error
             ),
-            onChanged: widget.onChanged,
+            onChanged: (value) {
+              // Reset error saat mengetik
+              setState(() {
+                _currentError = null;
+              });
+              widget.onChanged(value);
+            },
           ),
+          if (_currentError != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                _currentError!,
+                style: TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
         ],
       ),
     );
+  }
+
+  // Fungsi untuk validasi
+  void validate() {
+    if (widget.validator != null) {
+      setState(() {
+        _currentError = widget.validator!(widget.controller.text);
+      });
+    }
   }
 }

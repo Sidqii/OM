@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
 import 'package:pusdatin_end/widget/component/field/field_button.dart';
+import 'package:pusdatin_end/widget/component/field/field_calendar.dart';
+import 'package:pusdatin_end/widget/component/field/field_dropdown.dart';
 import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 import 'package:pusdatin_end/widget/component/field/field_text.dart';
 
 class LoanRequestPage extends StatefulWidget {
   final pengguna user;
-  
-LoanRequestPage({required this.user});
+
+  LoanRequestPage({required this.user});
   @override
   _tambahPeminjaman createState() => _tambahPeminjaman();
 }
@@ -16,13 +18,17 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
   final formKey = GlobalKey<FormState>();
 
   // TextEditingControllers untuk setiap field
-  final TextEditingController _nmPenanggungjawabController = TextEditingController();
-  final TextEditingController _jabatanPeminjamController = TextEditingController();
+  final TextEditingController _nmPenanggungjawabController =
+      TextEditingController();
+  final TextEditingController _jabatanPeminjamController =
+      TextEditingController();
   final TextEditingController _InstansiController = TextEditingController();
-  final TextEditingController _golonganPeminjamController = TextEditingController();
+  final TextEditingController _golonganPeminjamController =
+      TextEditingController();
   final TextEditingController _NRPpeminjamController = TextEditingController();
   final TextEditingController _namaPeminjamController = TextEditingController();
-  final TextEditingController _tanggalPeminjamController = TextEditingController();
+  final TextEditingController _tanggalPeminjamController =
+      TextEditingController();
   final TextEditingController _InventarisController = TextEditingController();
   final TextEditingController _fotoBarangController = TextEditingController();
   final TextEditingController _HalController = TextEditingController();
@@ -43,8 +49,9 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
   bool validateForm() {
     bool isValid = true;
     setState(() {
-      _nmPenaggungJawabError =
-          _nmPenanggungjawabController.text.isEmpty ? 'Silahkan masukan nomor seri' : null;
+      _nmPenaggungJawabError = _nmPenanggungjawabController.text.isEmpty
+          ? 'Silahkan masukan nomor seri'
+          : null;
       _jabatanPeminjamError = _jabatanPeminjamController.text.isEmpty
           ? 'Silakan masukkan nama barang'
           : null;
@@ -89,6 +96,33 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
     return isValid;
   }
 
+  void _resetFields() {
+    _nmPenanggungjawabController.clear();
+    _jabatanPeminjamController.clear();
+    _InstansiController.clear();
+    _golonganPeminjamController.clear();
+    _NRPpeminjamController.clear();
+    _namaPeminjamController.clear();
+    _tanggalPeminjamController.clear();
+    _InventarisController.clear();
+    _fotoBarangController.clear();
+    _HalController.clear();
+
+    // Hapus semua error yang ada
+    setState(() {
+      _nmPenaggungJawabError = null;
+      _jabatanPeminjamError = null;
+      _InstansiError = null;
+      _golonganPeminjamError = null;
+      _NRPpeminjamError = null;
+      _namaPeminjamError = null;
+      _tanggalPeminjamError = null;
+      _InventarisError = null;
+      _fotoBarangError = null;
+      _HalError = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,6 +156,12 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                         label: 'Nama Peminjam',
                         controller: _nmPenanggungjawabController,
                         errorText: _nmPenaggungJawabError,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Error';
+                          }
+                          return null;
+                        },
                         onChanged: (value) {
                           setState(() {
                             _nmPenaggungJawabError = null;
@@ -141,6 +181,12 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                                     label: 'Jabatan Peminjam',
                                     controller: _jabatanPeminjamController,
                                     errorText: _jabatanPeminjamError,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Error';
+                                      }
+                                      return null;
+                                    },
                                     onChanged: (value) {
                                       setState(
                                         () {
@@ -164,6 +210,12 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                                     label: 'Instansi',
                                     controller: _InstansiController,
                                     errorText: _InstansiError,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Error';
+                                      }
+                                      return null;
+                                    },
                                     onChanged: (value) {
                                       setState(
                                         () {
@@ -183,6 +235,12 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                         label: 'NRP Peminjam',
                         controller: _golonganPeminjamController,
                         errorText: _golonganPeminjamError,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Error';
+                          }
+                          return null;
+                        },
                         onChanged: (value) {
                           setState(() {
                             _golonganPeminjamError = null;
@@ -198,10 +256,17 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CompTxtfield(
+                                  DrpField(
+                                    items: ['Mavic', 'Drone', 'Static'],
                                     label: 'Merk Barang',
                                     controller: _NRPpeminjamController,
                                     errorText: _NRPpeminjamError,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Error';
+                                      }
+                                      return null;
+                                    },
                                     onChanged: (value) {
                                       setState(
                                         () {
@@ -225,6 +290,12 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                                     label: 'Nama Barang',
                                     controller: _namaPeminjamController,
                                     errorText: _namaPeminjamError,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Error';
+                                      }
+                                      return null;
+                                    },
                                     onChanged: (value) {
                                       setState(
                                         () {
@@ -240,10 +311,16 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                         ],
                       ),
                       SizedBox(height: 35),
-                      CompTxtfield(
+                      TglField(
                         label: 'Tanggal Peminjam',
                         controller: _tanggalPeminjamController,
                         errorText: _tanggalPeminjamError,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Error';
+                          }
+                          return null;
+                        },
                         onChanged: (value) {
                           setState(() {
                             _tanggalPeminjamError = null;
@@ -305,6 +382,12 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                         label: 'Hal',
                         controller: _HalController,
                         errorText: _HalError,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Error';
+                          }
+                          return null;
+                        },
                         onChanged: (value) {
                           setState(() {
                             _HalError = null;
@@ -313,14 +396,64 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                       ),
                       SizedBox(height: 85),
                       CustomButton(
-                        label: 'Kirim',
-                        onPressed: (){
-                          if (validateForm()) {
-                            print('Form valid');
-                          } else {
-                            print('Form invalid');
-                          }
-                        })
+                          label: 'Kirim',
+                          onPressed: () {
+                            if (formKey.currentState?.validate()??false) {
+                              showDialog(
+                                context: context,
+                                builder: (context){
+                                  return AlertDialog(
+                                    title: Center(child: Text('Pengajuan Terkirim')),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(height: 20),
+                                        Icon(Icons.check_circle_outline, size: 100, color: Colors.green,)
+                                      ],
+                                    ),actions: [
+                                      TextButton(
+                                        onPressed: (){
+                                          Navigator.of(context).pop();
+                                          _resetFields();
+                                        },
+                                        child: Text('Ok'))
+                                    ]
+                                  );
+                                });
+                            } else {
+                              print('Form invalid');
+                            }
+                            // if (validateForm()) {
+                            //   showDialog(
+                            //       context: context,
+                            //       builder: (context) {
+                            //         return AlertDialog(
+                            //             title: Center(
+                            //                 child: Text('Pengajuan Terkirim')),
+                            //             content: Column(
+                            //               mainAxisSize: MainAxisSize.min,
+                            //               children: [
+                            //                 SizedBox(height: 20),
+                            //                 Icon(
+                            //                   Icons.check_circle_outline,
+                            //                   size: 100,
+                            //                   color: Colors.green,
+                            //                 )
+                            //               ],
+                            //             ),
+                            //             actions: [
+                            //               TextButton(
+                            //                   onPressed: () {
+                            //                     Navigator.of(context).pop();
+                            //                     _resetFields();
+                            //                   },
+                            //                   child: Text('Ok'))
+                            //             ]);
+                            //       });
+                            // } else {
+                            //   print('Invalid Form!');
+                            // }
+                          })
                     ],
                   ),
                 ),

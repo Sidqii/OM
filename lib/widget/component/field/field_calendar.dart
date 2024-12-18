@@ -5,13 +5,15 @@ class TglField extends StatefulWidget {
   final TextEditingController controller;
   final String? errorText;
   final Function(String?) onChanged;
+  final String? Function(String?)? validator;
 
   const TglField({
     Key? key,
     required this.label,
     required this.controller,
-    required this.errorText,
+    this.errorText,
     required this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -19,6 +21,8 @@ class TglField extends StatefulWidget {
 }
 
 class _TglFieldState extends State<TglField> {
+  String? _currentError;
+
   @override
   Widget build(BuildContext context) {
     // Set warna label berdasarkan fokus
@@ -47,7 +51,12 @@ class _TglFieldState extends State<TglField> {
                 // Format tanggal ke format yang diinginkan (misalnya dd-MM-yyyy)
                 String formattedDate = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
                 widget.controller.text = formattedDate;
-                widget.onChanged(formattedDate); // Panggil callback untuk memberi tahu tanggal yang dipilih
+                widget.onChanged(formattedDate);
+
+                // Reset error jika ada
+                setState(() {
+                  _currentError = null;
+                });
               }
             },
             child: AbsorbPointer(
@@ -57,27 +66,53 @@ class _TglFieldState extends State<TglField> {
                   hintText: widget.controller.text.isEmpty ? null : widget.controller.text, // Menghilangkan hintText jika sudah ada teks
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: widget.errorText != null ? Colors.red : Colors.black54,
+                      color: _currentError != null ? Colors.red : Colors.black54,
                     ),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: widget.errorText != null ? Colors.red : Colors.black,
+                      color: _currentError != null ? Colors.red : Colors.black,
                     ),
                   ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: widget.errorText != null ? Colors.red : Colors.black54,
+                      color: _currentError != null ? Colors.red : Colors.black54,
                     ),
                   ),
                   suffixIcon: Icon(Icons.calendar_today), // Menampilkan ikon kalender di kanan
+                  errorText: _currentError,
                 ),
-                onChanged: widget.onChanged,
+                onChanged: (value) {
+                  // Callback perubahan nilai
+                  widget.onChanged(value);
+
+                  // Reset error saat mengetik
+                  setState(() {
+                    _currentError = null;
+                  });
+                },
               ),
             ),
           ),
+          if (_currentError != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                _currentError!,
+                style: TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
         ],
       ),
     );
+  }
+
+  // Fungsi untuk validasi
+  void validate() {
+    if (widget.validator != null) {
+      setState(() {
+        _currentError = widget.validator!(widget.controller.text);
+      });
+    }
   }
 }

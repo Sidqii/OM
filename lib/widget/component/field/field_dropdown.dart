@@ -6,14 +6,16 @@ class DrpField extends StatefulWidget {
   final String? errorText;
   final Function(String?) onChanged;
   final List<String> items;
+  final String? Function(String?)? validator;
 
   const DrpField({
     Key? key,
     required this.label,
     required this.controller,
-    required this.errorText,
+    this.errorText,
     required this.onChanged,
     required this.items,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class DrpField extends StatefulWidget {
 class _DrpFieldState extends State<DrpField> {
   late FocusNode _focusNode;
   String? _selectedItem;
+  String? _currentError;
 
   @override
   void initState() {
@@ -80,6 +83,7 @@ class _DrpFieldState extends State<DrpField> {
               if (selected != null) {
                 setState(() {
                   _selectedItem = selected;
+                  _currentError = null; // Reset error jika ada
                 });
                 widget.controller.text = selected;
                 widget.onChanged(selected);
@@ -93,26 +97,50 @@ class _DrpFieldState extends State<DrpField> {
                   hintText: _selectedItem ?? "Pilih ${widget.label}",
                   border: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: widget.errorText != null ? Colors.red : Colors.black54,
+                      color: _currentError != null ? Colors.red : Colors.black54,
                     ),
                   ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: widget.errorText != null ? Colors.red : Colors.black,
+                      color: _currentError != null ? Colors.red : Colors.black,
                     ),
                   ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: widget.errorText != null ? Colors.red : Colors.black54,
+                      color: _currentError != null ? Colors.red : Colors.black54,
                     ),
                   ),
+                  errorText: _currentError,
                 ),
-                onChanged: widget.onChanged,
+                onChanged: (value) {
+                  // Reset error saat mengetik
+                  setState(() {
+                    _currentError = null;
+                  });
+                  widget.onChanged(value);
+                },
               ),
             ),
           ),
+          if (_currentError != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Text(
+                _currentError!,
+                style: TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
         ],
       ),
     );
+  }
+
+  // Fungsi untuk validasi
+  void validate() {
+    if (widget.validator != null) {
+      setState(() {
+        _currentError = widget.validator!(widget.controller.text);
+      });
+    }
   }
 }

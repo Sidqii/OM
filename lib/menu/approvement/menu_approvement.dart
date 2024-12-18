@@ -187,7 +187,7 @@ class ApprovePage extends StatelessWidget {
                             ),
                             const SizedBox(width: 20),
                             Expanded(
-                              child: _buildSingleField('Hal', item.hal, false),
+                              child: _buildSingleField('Tanggal Peminjam', formatDate(item.tanggalPeminjaman), false),
                             )
                           ],
                         ),
