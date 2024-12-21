@@ -5,7 +5,7 @@ class CompSearch extends StatelessWidget {
 
   const CompSearch({Key?key, required this.onSearch}) : super(key: key);
 
-  @override
+  // @override
   @override
   Widget build(BuildContext context) {
     return TextField(
