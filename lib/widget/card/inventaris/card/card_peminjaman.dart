@@ -33,9 +33,17 @@ class _CardPeminjaman extends State<CardPeminjaman> {
       return Center(
         child: CardLoad(),
       );
-    } else if (providerPeminjaman.errorMessage != null) {
+    } 
+
+    else if (providerPeminjaman.errorMessage != null) {
       return Center(
-        child: Text('Error: ${providerPeminjaman.errorMessage}'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.wifi_off),
+            Text('Error: ${providerPeminjaman.errorMessage}'),
+          ],
+        ),
       );
     } else {
       return GestureDetector(

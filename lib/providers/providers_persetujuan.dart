@@ -20,11 +20,10 @@ class ProviderPersetujuan extends ChangeNotifier {
 
     _isLoading = true;
     _errorMessage = null;
-    notifyListeners();
 
     try {
       var pinjam = await _servicesPeminjaman.fetchPeminjamanDetail();
-      print('Data diterima: $pinjam');
+      // print('Data diterima: $pinjam');
 
       if (pinjam.isEmpty) {
         _errorMessage = 'Tidak ada data tersedia';
@@ -41,7 +40,9 @@ class ProviderPersetujuan extends ChangeNotifier {
       print('Error: $e');
     } finally {
       _isLoading = false;
-      notifyListeners();
+      if (_detail != null || _errorMessage != null) {
+        notifyListeners();
+      }
     }
   }
 
@@ -76,16 +77,16 @@ class ProviderPersetujuan extends ChangeNotifier {
   // Menambahkan metode untuk menyetujui peminjaman
   void approvePeminjaman(List<DatasetPeminjamandetail> data) {
     for (var item in data) {
-      item.status = 'Disetujui';  // Mengubah status menjadi "Disetujui"
+      item.status = 'Disetujui'; // Mengubah status menjadi "Disetujui"
     }
-    notifyListeners();  // Memberi tahu bahwa data telah berubah, UI perlu diperbarui
+    notifyListeners(); // Memberi tahu bahwa data telah berubah, UI perlu diperbarui
   }
 
   // Menambahkan metode untuk menolak peminjaman
   void rejectPeminjaman(List<DatasetPeminjamandetail> data) {
     for (var item in data) {
-      item.status = 'Ditolak';  // Mengubah status menjadi "Ditolak"
+      item.status = 'Ditolak'; // Mengubah status menjadi "Ditolak"
     }
-    notifyListeners();  // Memberi tahu bahwa data telah berubah, UI perlu diperbarui
+    notifyListeners(); // Memberi tahu bahwa data telah berubah, UI perlu diperbarui
   }
 }

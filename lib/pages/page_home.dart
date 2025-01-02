@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 200), () {
-      print("HomePage loaded with User Level: ${widget.user.level}");
+      print("Login user dengan level: ${widget.user.level}");
     });
   }
 

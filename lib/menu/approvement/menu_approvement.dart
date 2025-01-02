@@ -64,7 +64,11 @@ class ApprovePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProviderPersetujuan>(context);
+    final provider = Provider.of<ProviderPersetujuan>(context, listen: false);
+
+    // WidgetsBinding.instance.addPostFrameCallback((_){
+    //   provider.filterByStatus(status);
+    // });
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -79,10 +83,23 @@ class ApprovePage extends StatelessWidget {
           }
 
           if (provider.errorMessage != null) {
-            return Center(child: Text(provider.errorMessage!));
+            // return Center(child: Text(provider.errorMessage!));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.wifi_off,
+                    size: 50,
+                    color: Colors.grey,
+                  )
+                ],
+              ),
+            );
           }
-
-          provider.filterByStatus(status);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            provider.filterByStatus(status);
+          });
           final filteredData = provider.detail;
 
           if (filteredData == null || filteredData.isEmpty) {
@@ -187,7 +204,8 @@ class ApprovePage extends StatelessWidget {
                             ),
                             const SizedBox(width: 20),
                             Expanded(
-                              child: _buildSingleField('Tanggal Peminjam', formatDate(item.tanggalPeminjaman), false),
+                              child: _buildSingleField('Tanggal Peminjam',
+                                  formatDate(item.tanggalPeminjaman), false),
                             )
                           ],
                         ),

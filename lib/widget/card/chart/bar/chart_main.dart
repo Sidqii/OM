@@ -32,11 +32,11 @@ class _ChartBarState extends State<ChartBar> {
     final screenHeight = MediaQuery.of(context).size.height;
     final provider = Provider.of<ProviderDatabarang>(context);
 
-    if (provider.isLoading) {
-      print('Data dalam proses fetch');
-    } else {
-      print('Data barang di ChartBar: ${provider.dataBarang}');
-    }
+    // if (provider.isLoading) {
+    //   print('Data dalam proses fetch');
+    // } else {
+    //   print('Data barang di ChartBar: ${provider.dataBarang}');
+    // }
 
     return Container(
       width: double.infinity,

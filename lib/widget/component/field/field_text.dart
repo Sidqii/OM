@@ -6,6 +6,7 @@ class CompTxtfield extends StatefulWidget {
   final String? errorText;
   final Function(String) onChanged;
   final String? Function(String?)? validator;
+  final Function(String)? onFieldSubmitted; // Menambahkan parameter onFieldSubmitted
 
   const CompTxtfield({
     Key? key,
@@ -14,6 +15,7 @@ class CompTxtfield extends StatefulWidget {
     this.errorText,
     required this.onChanged,
     this.validator,
+    this.onFieldSubmitted, // Menambahkan parameter onFieldSubmitted
   }) : super(key: key);
 
   @override
@@ -84,6 +86,8 @@ class _CompTxtfieldState extends State<CompTxtfield> {
               });
               widget.onChanged(value);
             },
+            onFieldSubmitted: widget.onFieldSubmitted, // Menambahkan onFieldSubmitted
+            textInputAction: TextInputAction.next, // Menentukan tindakan setelah Enter, bisa next atau done
           ),
           if (_currentError != null)
             Padding(

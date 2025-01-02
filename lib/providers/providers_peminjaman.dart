@@ -24,8 +24,6 @@ class ProviderPeminjaman extends ChangeNotifier {
 
     try {
       var pinjam = await _servicesPeminjaman.fetchPeminjamanDetail();
-      print('Data diterima: $pinjam');
-
       if (pinjam.isEmpty) {
         _errorMessage = 'Tidak ada data tersedia';
         _detail = null;
@@ -35,8 +33,8 @@ class ProviderPeminjaman extends ChangeNotifier {
     } catch (e) {
       if (e is SocketException) {
         _errorMessage = 'Tidak ada internet';
-      } else {
-        _errorMessage = '${e.toString()}';
+      } else if(e is Exception) {
+        _errorMessage = 'Terjadi kesalahan saat memuat data: ${e.toString()}';
       }
       print('Error: $e');
     } finally {

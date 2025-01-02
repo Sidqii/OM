@@ -24,7 +24,7 @@ class ProviderDatabarang extends ChangeNotifier {
 
     try {
       var data = await _servicesDatabarang.fetchDataBarang();
-      print('Data diterima: $data');
+      // print('Data diterima: $data');
 
       // Handle empty data case
       if (data.isEmpty) {
@@ -33,7 +33,7 @@ class ProviderDatabarang extends ChangeNotifier {
       } else {
         _databarang = data;
         _filteredDatabarang = data;
-        print('Data barang telah diambil');
+        // print('Data barang telah diambil');
       }
     } catch (e) {
       // Handle different error types
@@ -42,7 +42,7 @@ class ProviderDatabarang extends ChangeNotifier {
       } else {
         _errorMessage = '${e.toString()}';
       }
-      print('Error: $e');
+      
     } finally {
       _isLoading = false;
       notifyListeners();

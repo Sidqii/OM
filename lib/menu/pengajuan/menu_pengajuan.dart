@@ -1,8 +1,6 @@
+
 import 'package:flutter/material.dart';
 import 'package:pusdatin_end/models/mock/models_pengguna.dart';
-import 'package:pusdatin_end/widget/component/field/field_button.dart';
-import 'package:pusdatin_end/widget/component/field/field_calendar.dart';
-import 'package:pusdatin_end/widget/component/field/field_dropdown.dart';
 import 'package:pusdatin_end/widget/component/page/comp_kembali.dart';
 import 'package:pusdatin_end/widget/component/field/field_text.dart';
 
@@ -17,112 +15,84 @@ class LoanRequestPage extends StatefulWidget {
 class _tambahPeminjaman extends State<LoanRequestPage> {
   final formKey = GlobalKey<FormState>();
 
+  // Enter function pada tiap field
+  final FocusNode nmPeminjamFocus = FocusNode();
+  final FocusNode jabatanPeminjamFocus = FocusNode();
+  final FocusNode instansiFocus = FocusNode();
+  final FocusNode nrpPeminjamFocus = FocusNode();
+  final FocusNode merkBarangFocus = FocusNode();
+  final FocusNode nmBarangFocus = FocusNode();
+  final FocusNode tglPeminjamanFocus = FocusNode();
+  final FocusNode halFocus = FocusNode();
+
   // TextEditingControllers untuk setiap field
-  final TextEditingController _nmPenanggungjawabController =
-      TextEditingController();
-  final TextEditingController _jabatanPeminjamController =
-      TextEditingController();
-  final TextEditingController _InstansiController = TextEditingController();
-  final TextEditingController _golonganPeminjamController =
-      TextEditingController();
-  final TextEditingController _NRPpeminjamController = TextEditingController();
-  final TextEditingController _namaPeminjamController = TextEditingController();
-  final TextEditingController _tanggalPeminjamController =
-      TextEditingController();
-  final TextEditingController _InventarisController = TextEditingController();
-  final TextEditingController _fotoBarangController = TextEditingController();
-  final TextEditingController _HalController = TextEditingController();
+  final Map<String, TextEditingController> controllers = {
+    'nmPenanggungJawab': TextEditingController(),
+    'nmPeminjam': TextEditingController(),
+    'jabatanPeminjam': TextEditingController(),
+    'golPeminjam': TextEditingController(),
+    'nrpPeminjam': TextEditingController(),
+    'instansi': TextEditingController(),
+    'merkBarang': TextEditingController(),
+    'nmBarang': TextEditingController(),
+    'tglPeminjaman': TextEditingController(),
+    'fotoBarang': TextEditingController(),
+    'hal': TextEditingController(),
+  };
 
   // Menyimpan error message untuk setiap field
-  String? _nmPenaggungJawabError;
-  String? _jabatanPeminjamError;
-  String? _InstansiError;
-  String? _golonganPeminjamError;
-  String? _NRPpeminjamError;
-  String? _namaPeminjamError;
-  String? _tanggalPeminjamError;
-  String? _InventarisError;
-  String? _fotoBarangError;
-  String? _HalError;
+  final Map<String, String?> errors = {};
 
   // Fungsi untuk validasi form secara keseluruhan
   bool validateForm() {
     bool isValid = true;
     setState(() {
-      _nmPenaggungJawabError = _nmPenanggungjawabController.text.isEmpty
-          ? 'Silahkan masukan nomor seri'
-          : null;
-      _jabatanPeminjamError = _jabatanPeminjamController.text.isEmpty
-          ? 'Silakan masukkan nama barang'
-          : null;
-      _InstansiError = _InstansiController.text.isEmpty
-          ? 'Silakan masukkan kondisi barang'
-          : null;
-      _golonganPeminjamError = _golonganPeminjamController.text.isEmpty
-          ? 'Silakan masukkan pengadaan barang'
-          : null;
-      _NRPpeminjamError = _NRPpeminjamController.text.isEmpty
-          ? 'Silakan masukkan tanggal masuk barang'
-          : null;
-      _namaPeminjamError = _namaPeminjamController.text.isEmpty
-          ? 'Silakan masukkan masa lisensi'
-          : null;
-      _tanggalPeminjamError = _tanggalPeminjamController.text.isEmpty
-          ? 'Silakan masukkan merk barang'
-          : null;
-      _InventarisError = _InventarisController.text.isEmpty
-          ? 'Silakan masukkan lokasi barang'
-          : null;
-      _fotoBarangError = _fotoBarangController.text.isEmpty
-          ? 'Silakan masukkan foto barang'
-          : null;
-      _HalError = _HalController.text.isEmpty
-          ? 'Silakan masukkan keterangan barang'
-          : null;
-
-      if (_nmPenaggungJawabError != null ||
-          _jabatanPeminjamError != null ||
-          _InstansiError != null ||
-          _golonganPeminjamError != null ||
-          _NRPpeminjamError != null ||
-          _namaPeminjamError != null ||
-          _tanggalPeminjamError != null ||
-          _InventarisError != null ||
-          _fotoBarangError != null ||
-          _HalError != null) {
-        isValid = false;
-      }
+      errors.clear();
+      controllers.forEach((Key, controller) {
+        if (controller.text.isEmpty) {
+          errors[Key] = 'Silahkan masukan $Key';
+          isValid = false;
+        } else {
+          errors[Key] = null;
+        }
+      });
     });
     return isValid;
   }
 
-  void _resetFields() {
-    _nmPenanggungjawabController.clear();
-    _jabatanPeminjamController.clear();
-    _InstansiController.clear();
-    _golonganPeminjamController.clear();
-    _NRPpeminjamController.clear();
-    _namaPeminjamController.clear();
-    _tanggalPeminjamController.clear();
-    _InventarisController.clear();
-    _fotoBarangController.clear();
-    _HalController.clear();
-
-    // Hapus semua error yang ada
-    setState(() {
-      _nmPenaggungJawabError = null;
-      _jabatanPeminjamError = null;
-      _InstansiError = null;
-      _golonganPeminjamError = null;
-      _NRPpeminjamError = null;
-      _namaPeminjamError = null;
-      _tanggalPeminjamError = null;
-      _InventarisError = null;
-      _fotoBarangError = null;
-      _HalError = null;
-    });
+  void onFieldSubmitted (FocusNode nextFocus){
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 
+  Widget buildTextField(
+      String label, TextEditingController controller, String? errorText,
+      {bool isDate = false, FocusNode? nextFocus}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: CompTxtfield(
+        label: label,
+        controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Field wajib diisi';
+          }
+          return null;
+        },
+        onFieldSubmitted: (_){
+          if (nextFocus != null) {
+            onFieldSubmitted(nextFocus);
+          }
+        },
+        onChanged: (value) {
+          setState(() {
+            errors[label] = null;
+          });
+        },
+      ),
+    );
+  }
+
+  // Header laman Peminjaman Barang
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,319 +115,85 @@ class _tambahPeminjaman extends State<LoanRequestPage> {
                 ),
               ),
             ),
-            // Form Pengajuan
+
+            // Form Pengajuan Peminjaman Barang
             Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: <Widget>[
-                      CompTxtfield(
-                        label: 'Nama Peminjam',
-                        controller: _nmPenanggungjawabController,
-                        errorText: _nmPenaggungJawabError,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Error';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _nmPenaggungJawabError = null;
-                          });
-                        },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildTextField(
+                    'Nama Peminjam',
+                    controllers['nmPeminjam']!,
+                    errors['nmPeminjam'],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: buildTextField(
+                          'Jabatan Peminjam',
+                          controllers['jabatanPeminjam']!,
+                          errors['jabatanPeminjam'],
+                        ),
                       ),
-                      SizedBox(height: 3),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CompTxtfield(
-                                    label: 'Jabatan Peminjam',
-                                    controller: _jabatanPeminjamController,
-                                    errorText: _jabatanPeminjamError,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Error';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _jabatanPeminjamError = null;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CompTxtfield(
-                                    label: 'Instansi',
-                                    controller: _InstansiController,
-                                    errorText: _InstansiError,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Error';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _InstansiError = null;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 35),
-                      CompTxtfield(
-                        label: 'NRP Peminjam',
-                        controller: _golonganPeminjamController,
-                        errorText: _golonganPeminjamError,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Error';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _golonganPeminjamError = null;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 3),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DrpField(
-                                    items: ['Mavic', 'Drone', 'Static'],
-                                    label: 'Merk Barang',
-                                    controller: _NRPpeminjamController,
-                                    errorText: _NRPpeminjamError,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Error';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _NRPpeminjamError = null;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CompTxtfield(
-                                    label: 'Nama Barang',
-                                    controller: _namaPeminjamController,
-                                    errorText: _namaPeminjamError,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Error';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(
-                                        () {
-                                          _namaPeminjamError = null;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 35),
-                      TglField(
-                        label: 'Tanggal Peminjam',
-                        controller: _tanggalPeminjamController,
-                        errorText: _tanggalPeminjamError,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Error';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _tanggalPeminjamError = null;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 3),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.only(right: 8.0),
-                      //         child: Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             CompTxtfield(
-                      //               label: 'Hal',
-                      //               controller: _InventarisController,
-                      //               errorText: _InventarisError,
-                      //               onChanged: (value) {
-                      //                 setState(
-                      //                   () {
-                      //                     _InventarisError = null;
-                      //                   },
-                      //                 );
-                      //               },
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(width: 10),
-                      //     Expanded(
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.only(left: 8.0),
-                      //         child: Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             CompTxtfield(
-                      //               label: 'Foto Barang',
-                      //               controller: _fotoBarangController,
-                      //               errorText: _fotoBarangError,
-                      //               onChanged: (value) {
-                      //                 setState(
-                      //                   () {
-                      //                     _fotoBarangError = null;
-                      //                   },
-                      //                 );
-                      //               },
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      SizedBox(height: 35),
-                      CompTxtfield(
-                        label: 'Hal',
-                        controller: _HalController,
-                        errorText: _HalError,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Error';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _HalError = null;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 85),
-                      CustomButton(
-                          label: 'Kirim',
-                          onPressed: () {
-                            if (formKey.currentState?.validate()??false) {
-                              showDialog(
-                                context: context,
-                                builder: (context){
-                                  return AlertDialog(
-                                    title: Center(child: Text('Pengajuan Terkirim')),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(height: 20),
-                                        Icon(Icons.check_circle_outline, size: 100, color: Colors.green,)
-                                      ],
-                                    ),actions: [
-                                      TextButton(
-                                        onPressed: (){
-                                          Navigator.of(context).pop();
-                                          _resetFields();
-                                        },
-                                        child: Text('Ok'))
-                                    ]
-                                  );
-                                });
-                            } else {
-                              print('Form invalid');
-                            }
-                            // if (validateForm()) {
-                            //   showDialog(
-                            //       context: context,
-                            //       builder: (context) {
-                            //         return AlertDialog(
-                            //             title: Center(
-                            //                 child: Text('Pengajuan Terkirim')),
-                            //             content: Column(
-                            //               mainAxisSize: MainAxisSize.min,
-                            //               children: [
-                            //                 SizedBox(height: 20),
-                            //                 Icon(
-                            //                   Icons.check_circle_outline,
-                            //                   size: 100,
-                            //                   color: Colors.green,
-                            //                 )
-                            //               ],
-                            //             ),
-                            //             actions: [
-                            //               TextButton(
-                            //                   onPressed: () {
-                            //                     Navigator.of(context).pop();
-                            //                     _resetFields();
-                            //                   },
-                            //                   child: Text('Ok'))
-                            //             ]);
-                            //       });
-                            // } else {
-                            //   print('Invalid Form!');
-                            // }
-                          })
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: buildTextField(
+                          'Instansi',
+                          controllers['instansi']!,
+                          errors['instansi'],
+                        ),
+                      )
                     ],
                   ),
-                ),
+                  SizedBox(height: 30),
+                  buildTextField(
+                    'NRP Peminjam',
+                    controllers['nrpPeminjam']!,
+                    errors['nrpPeminjam'],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: buildTextField(
+                          'Merk Barang',
+                          controllers['merkBarang']!,
+                          errors['merkBarang'],
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: buildTextField(
+                          'Nama Barang',
+                          controllers['nmBarang']!,
+                          errors['nmBarang'],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  buildTextField(
+                    'Tanggal Peminjaman',
+                    controllers['tglPeminjaman']!,
+                    errors['tglPeminjaman'],
+                  ),
+                  SizedBox(height: 30),
+                  buildTextField(
+                    'Hal',
+                    controllers['hal']!,
+                    errors['hal'],
+                  )
+                ],
               ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (validateForm()) {
+                  print('Form valid');
+                } else {
+                  print('Form invalid');
+                }
+              },
+              child: Text('Kirim'),
             ),
           ],
         ),

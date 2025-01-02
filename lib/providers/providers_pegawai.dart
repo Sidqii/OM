@@ -22,7 +22,7 @@ class ProviderPegawai extends ChangeNotifier {
 
     try {
       var pegawai = await _servicesPegawai.fetchPegawai();
-      print('Data diterima: $pegawai');
+      // print('Data diterima: $pegawai');
 
       if (pegawai.isEmpty) {
         _errorMessage = 'Tidak ada data';

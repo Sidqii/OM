@@ -38,8 +38,20 @@ class _DataCardState extends State<DataBarangCard> {
         child: CardLoad(),
       );
     } else if (provider.errorMessage != null) {
+      // return Center(
+      //   child: Text('Error: ${provider.errorMessage}'),
+      // );
       return Center(
-        child: Text('Error: ${provider.errorMessage}'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.wifi_off,
+              size: 80,
+              color: Colors.grey,
+            )
+          ],
+        ),
       );
     } else {
       return GestureDetector(

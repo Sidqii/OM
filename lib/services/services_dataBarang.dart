@@ -11,7 +11,7 @@ class ServicesDatabarang {
 
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
-      print('Data berhasil diterima: $jsonData');
+      // print('Data berhasil diterima: $jsonData');
       if (jsonData is List) {
         return DatasetDatabarang.fromJsonList(jsonData);
       } else if (jsonData is Map && jsonData.containsKey('data')) {

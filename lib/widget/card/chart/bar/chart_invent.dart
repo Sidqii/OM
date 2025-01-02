@@ -16,9 +16,29 @@ class InventoryBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
 
     if (dataBarang == null || dataBarang!.isEmpty) {
-      print('Data barang yang diterima di chart: $dataBarang');
-      return const Center(
-        child: Text('Data tidak tersedia'),
+      // print('Data barang yang diterima di chart: $dataBarang');
+      // return const Center(
+      //   child: Text('Data tidak tersedia'),
+      // );
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.wifi_off,
+              size: 50,
+              color: Colors.grey,
+            ),
+            Text(
+              'Tidak ada internet',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
       );
     }
 
